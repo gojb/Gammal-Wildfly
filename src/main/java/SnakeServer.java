@@ -7,8 +7,8 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/snake")
-public class Snake {
-	public static ArrayList<Snake> snakes = new ArrayList<Snake>();
+public class SnakeServer {
+	public static ArrayList<SnakeServer> snakes = new ArrayList<SnakeServer>();
 	public static Timer timer = new Timer(100,e->update());
 	public static Random random = new Random();
 	public static final int height = 50;
@@ -84,7 +84,7 @@ public class Snake {
 		}
 	}
 	public static void sendAll(String message){
-		for (Snake snake : snakes) {
+		for (SnakeServer snake : snakes) {
 			snake.send(message);
 		}
 	}
@@ -106,7 +106,6 @@ public class Snake {
 			length = 3;
 			x[0]=posx;
 			y[0]=posy;
-			send(posx+"  "+posy);
 		}
 		send("A");
 		gameover=false;
@@ -124,7 +123,7 @@ public class Snake {
 		try{
 			if (!gameover) {
 				//Gör alla förflyttningar
-				for (Snake snake : snakes) {
+				for (SnakeServer snake : snakes) {
 					for (int i = snake.length-1 ; i > 0; i--) {
 						snake.x[i]=snake.x[i-1];
 						snake.y[i]=snake.y[i-1];
@@ -139,7 +138,7 @@ public class Snake {
 						snake.x[0]-=1;
 				}
 				//Förlustkontroll
-				for (Snake snake : snakes) {
+				for (SnakeServer snake : snakes) {
 					for (int i = 1; i < snake.length; i++) {
 						//Kolla om munnen nuddar egna kroppen
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
@@ -155,7 +154,7 @@ public class Snake {
 						return;
 					}
 					//Kolla om munnen nuddar annans kropp eller mun
-					for (Snake snake2 : snakes) {
+					for (SnakeServer snake2 : snakes) {
 						if (snake2!=snake) {
 							for (int i = 0; i < snake2.length; i++) {
 								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
@@ -168,22 +167,20 @@ public class Snake {
 					}
 				}
 				//Poängkontroll
-				for (Snake snake : snakes) {
+				for (SnakeServer snake : snakes) {
 					if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
-//						snake.x[snake.length-1]=-1;
-//						snake.y[snake.length-1]=-1;
 						snake.length++;
 						plupp();
 					}
 				}
 				//Skicka data till spelarna
-				for (Snake snake : snakes) {
+				for (SnakeServer snake : snakes) {
 					if (pause) {
 						snake.send("A PAUSE");
 					}
 
 					snake.send("CLEAR");
-					for (Snake snake2 : snakes) {
+					for (SnakeServer snake2 : snakes) {
 						String string = "";
 						for (int i = 0; i < snake2.length; i++) {
 							int x = snake2.x[i];
@@ -197,7 +194,7 @@ public class Snake {
 			}
 		}catch(Exception e){
 			snakes.get(0).send("UPDATEEXEPTION ");
-			for (Snake snake : snakes) { 
+			for (SnakeServer snake : snakes) { 
 				snake.send("UPDATEEXEPTION ");
 			}
 
