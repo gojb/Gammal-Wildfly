@@ -115,7 +115,7 @@ public class Snake {
 		pluppY = random.nextInt(height);
 	}
 	static void gameover(String string){
-		sendAll("gameover"+string);
+//		sendAll("A GAMEOVER "+string);
 		gameover=true;
 		overname=string;
 	}
