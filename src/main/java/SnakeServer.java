@@ -57,12 +57,13 @@ public class SnakeServer {
 				timer.stop();
 			}
 			else if (string.equals("RES")) {
-				reset();
+				resetAll();
 			}
 
 			else if (string.equals("R")) {
 				String string2 = scanner.next();
-				if (!((riktning.equals("up")||riktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||(riktning.equals("left")||riktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
+				if (!((riktning.equals("up")||riktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
+						(riktning.equals("left")||riktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
 					riktning=string2;
 				}
 				
