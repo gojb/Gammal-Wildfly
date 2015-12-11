@@ -90,8 +90,8 @@ public class Snake {
 	}
 	public void reset(){
 		for (int i = 0; i < x.length; i++) {
-			x[i]=0;
-			y[i]=0;
+			x[i]=-1;
+			y[i]=-1;
 		}
 		int posx = random.nextInt(width);
 		int posy = random.nextInt(height);
@@ -169,6 +169,8 @@ public class Snake {
 				//Poängkontroll
 				for (Snake snake : snakes) {
 					if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
+//						snake.x[snake.length-1]=-1;
+//						snake.y[snake.length-1]=-1;
 						snake.length++;
 						plupp();
 					}
