@@ -148,7 +148,7 @@ public class Snake {
 						}
 					}
 					//Kolla om munnen åker ur bild
-					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>width||snake.y[0]>height) {
+					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
 						gameover(snake.namn);
 						//						sendAll("2");
 						return;
