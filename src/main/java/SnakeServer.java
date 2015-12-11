@@ -16,6 +16,9 @@ public class SnakeServer {
 	public static boolean gameover,pause;
 	public static int pluppX,pluppY;
 	public static String overname;
+	public static void main(String[] args) {
+		timer.start();
+	}
 
 	public Session session;
 	public int[] x=new int[1000],y=new int[1000];
@@ -23,7 +26,8 @@ public class SnakeServer {
 	public String riktning;
 	public Color färg;
 	public String namn;
-
+	
+	
 	@OnMessage
 	public void in(String message){
 		Scanner scanner;
@@ -33,7 +37,6 @@ public class SnakeServer {
 			if (string.equals("D")) {
 				färg = new Color(Integer.parseInt(scanner.next()));
 				namn = scanner.next();
-
 				reset();
 				send("START");
 
@@ -83,11 +86,6 @@ public class SnakeServer {
 			e.printStackTrace();
 		}
 	}
-	public static void sendAll(String message){
-		for (SnakeServer snake : snakes) {
-			snake.send(message);
-		}
-	}
 	public void reset(){
 		for (int i = 0; i < x.length; i++) {
 			x[i]=-1;
@@ -109,6 +107,16 @@ public class SnakeServer {
 		}
 		send("A");
 		gameover=false;
+	}
+	public static void resetAll(){
+		for (SnakeServer snakeServer : snakes) {
+			snakeServer.reset();
+		}
+	}
+	public static void sendAll(String message){
+		for (SnakeServer snake : snakes) {
+			snake.send(message);
+		}
 	}
 	static void plupp(){
 		pluppX = random.nextInt(width);
