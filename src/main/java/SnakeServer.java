@@ -16,6 +16,9 @@ public class SnakeServer {
 	public static boolean gameover,pause;
 	public static int pluppX,pluppY;
 	public static String overname;
+	static{
+		timer.start();
+	}
 
 	public Session session;
 	public int[] x=new int[1000],y=new int[1000];
@@ -23,19 +26,13 @@ public class SnakeServer {
 	public String riktning;
 	public Color färg;
 	public String namn;
-	
-	
+
+
 	@OnOpen
 	public void open(Session session){
 		this.session=session;
-		snakes.add(this);
-		timer.start();
-		try{
-			sendAll("OPEN");
-		}
-		catch(Exception e){
-	
-		}
+		send("OPEN");
+
 	}
 	@OnMessage
 	public void in(String message){
@@ -43,9 +40,18 @@ public class SnakeServer {
 		try {
 			scanner = new Scanner(message);
 			String string=scanner.next();
-			if (string.equals("D")) {
+			if (string.equals("R")) {
+				String string2 = scanner.next();
+				if (!((riktning.equals("up")||riktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
+						(riktning.equals("left")||riktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
+					riktning=string2;
+				}
+
+			}
+			else if (string.equals("INIT")) {
 				färg = new Color(Integer.parseInt(scanner.next()));
 				namn = scanner.next();
+				snakes.add(this);
 				reset();
 				send("START");
 
@@ -58,15 +64,6 @@ public class SnakeServer {
 			}
 			else if (string.equals("RES")) {
 				resetAll();
-			}
-
-			else if (string.equals("R")) {
-				String string2 = scanner.next();
-				if (!((riktning.equals("up")||riktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
-						(riktning.equals("left")||riktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
-					riktning=string2;
-				}
-				
 			}
 			else if(string.equals("pause")){
 
@@ -188,26 +185,24 @@ public class SnakeServer {
 					if (pause) {
 						snake.send("A PAUSE");
 					}
-
-					snake.send("CLEAR");
-					for (SnakeServer snake2 : snakes) {
-						String string = "";
-						for (int i = 0; i < snake2.length; i++) {
-							int x = snake2.x[i];
-							int y = snake2.y[i];
-							string+=x+" "+y+" ";
+					else{
+						snake.send("CLEAR");
+						for (SnakeServer snake2 : snakes) {
+							String string = "";
+							for (int i = 0; i < snake2.length; i++) {
+								int x = snake2.x[i];
+								int y = snake2.y[i];
+								string+=x+" "+y+" ";
+							}
+							snake.send("B "+snake2.färg.getRGB()+" "+string);
 						}
-						snake.send("B "+snake2.färg.getRGB()+" "+string);
+						snake.send("P " + pluppX + " " + pluppY);
 					}
-					snake.send("P " + pluppX + " " + pluppY);
 				}
 			}
-		}catch(Exception e){
-			snakes.get(0).send("UPDATEEXEPTION ");
-			for (SnakeServer snake : snakes) { 
-				snake.send("UPDATEEXEPTION ");
-			}
-
+		}
+		catch(Exception e){
+			sendAll("UPDATEEXEPTION");
 		}
 	}
 
