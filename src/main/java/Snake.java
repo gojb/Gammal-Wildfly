@@ -108,6 +108,7 @@ public class Snake {
 			y[0]=posy;
 			send(posx+"  "+posy);
 		}
+		send("A");
 		gameover=false;
 	}
 	static void plupp(){
