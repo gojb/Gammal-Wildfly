@@ -16,9 +16,6 @@ public class SnakeServer {
 	public static boolean gameover,pause;
 	public static int pluppX,pluppY;
 	public static String overname;
-	public static void main(String[] args) {
-		timer.start();
-	}
 
 	public Session session;
 	public int[] x=new int[1000],y=new int[1000];
@@ -28,6 +25,19 @@ public class SnakeServer {
 	public String namn;
 	
 	
+	@OnOpen
+	public void open(Session session){
+		this.session=session;
+		snakes.add(this);
+		timer.stop();
+		plupp();
+		try{
+			sendAll("OPEN");
+		}
+		catch(Exception e){
+	
+		}
+	}
 	@OnMessage
 	public void in(String message){
 		Scanner scanner;
@@ -61,18 +71,6 @@ public class SnakeServer {
 			scanner.close();
 		} catch (Exception e) {
 			send(e.toString());
-		}
-	}
-	@OnOpen
-	public void open(Session session){
-		this.session=session;
-		snakes.add(this);
-		plupp();
-		try{
-			sendAll("OPEN");
-		}
-		catch(Exception e){
-
 		}
 	}
 	@OnClose 
