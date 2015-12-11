@@ -29,8 +29,7 @@ public class SnakeServer {
 	public void open(Session session){
 		this.session=session;
 		snakes.add(this);
-		timer.stop();
-		plupp();
+		timer.start();
 		try{
 			sendAll("OPEN");
 		}
@@ -103,6 +102,7 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
+		plupp();
 		send("A");
 		gameover=false;
 	}
