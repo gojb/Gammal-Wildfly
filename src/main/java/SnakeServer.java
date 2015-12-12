@@ -48,6 +48,7 @@ public class SnakeServer {
 				}
 
 			}
+			
 			else if (string.equals("INIT")) {
 				färg = new Color(Integer.parseInt(scanner.next()));
 				namn = scanner.next();
