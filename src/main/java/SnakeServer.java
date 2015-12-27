@@ -26,6 +26,7 @@ public class SnakeServer {
 	public String riktning;
 	public Color färg;
 	public String namn;
+	public int inactive;
 
 
 	@OnOpen
@@ -36,6 +37,7 @@ public class SnakeServer {
 	}
 	@OnMessage
 	public void in(String message){
+		inactive=0;
 		Scanner scanner;
 		try {
 			scanner = new Scanner(message);
@@ -185,6 +187,10 @@ public class SnakeServer {
 				}
 				//Skicka data till spelarna
 				for (SnakeServer snake : snakes) {
+					if (snake.inactive++==100) {
+						snake.session.close();
+						return;
+					}
 					if (pause) {
 						snake.send("A PAUSE");
 					}
