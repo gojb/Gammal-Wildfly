@@ -135,11 +135,11 @@ public class SnakeServer {
 		highscore();
 	}
 	static void highscore(){
-		String string = "A HIGHSCORE";
+		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
-			string+=snake.namn+";"+(snake.length-3);
+			sendAll( "H SET (snake.length-3) "+snake.namn);
 		}
-		sendAll(string);
+		sendAll( "H DONE ");
 	}
 	static void gameover(String string){
 		sendAll("A GAMEOVER "+string);
