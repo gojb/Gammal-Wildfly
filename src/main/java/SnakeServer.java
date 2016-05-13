@@ -72,6 +72,12 @@ public class SnakeServer {
 			}
 			else if(string.equals("PAUSE")){
 				pause=!pause;
+				if (pause) {
+					sendAll("A PAUSE");
+				}
+				else {
+					sendAll("A UNPAUSE");
+				}
 			}
 			scanner.close();
 		} catch (Exception e) {
@@ -201,6 +207,7 @@ public class SnakeServer {
 						}
 						snake.send("B "+snake2.färg.getRGB()+" "+string);
 					}
+
 				}
 			}
 		}
