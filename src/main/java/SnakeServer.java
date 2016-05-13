@@ -56,7 +56,7 @@ public class SnakeServer {
 			else if (string.equals("INIT")) {
 				färg = new Color(Integer.parseInt(scanner.next()));
 				scanner.useDelimiter("\\z"); 
-				namn = scanner.next();
+				namn = scanner.next().substring(1);
 				snakes.add(this);
 				reset();
 				send("START");
