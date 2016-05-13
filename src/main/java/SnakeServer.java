@@ -139,7 +139,7 @@ public class SnakeServer {
 	}
 	public static void update() {
 		try{
-			if (!gameover||!pause) {
+			if (!gameover&&!pause) {
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
 					for (int i = snake.length-1 ; i > 0; i--) {
