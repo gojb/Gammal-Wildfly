@@ -195,7 +195,7 @@ public class SnakeServer {
 						snake.send("A PAUSE");
 					}
 					else{
-						snake.send("CLEAR");
+//						snake.send("CLEAR");
 						snake.send("P " + pluppX + " " + pluppY);
 						for (SnakeServer snake2 : snakes) {
 							String string = "";
