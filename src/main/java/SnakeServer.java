@@ -70,8 +70,8 @@ public class SnakeServer {
 			else if (string.equals("RES")) {
 				resetAll();
 			}
-			else if(string.equals("pause")){
-				pause^=true;
+			else if(string.equals("PAUSE")){
+				pause=!pause;
 			}
 			scanner.close();
 		} catch (Exception e) {
