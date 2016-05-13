@@ -137,7 +137,7 @@ public class SnakeServer {
 	static void highscore(){
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
-			sendAll( "H SET (snake.length-3) "+snake.namn);
+			sendAll( "H SET (snake.length-3) "+snake.färg.getRGB() +" "+snake.namn);
 		}
 		sendAll( "H DONE ");
 	}
