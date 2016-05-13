@@ -55,6 +55,7 @@ public class SnakeServer {
 
 			else if (string.equals("INIT")) {
 				färg = new Color(Integer.parseInt(scanner.next()));
+				scanner.useDelimiter("\\z"); 
 				namn = scanner.next();
 				snakes.add(this);
 				reset();
@@ -131,6 +132,14 @@ public class SnakeServer {
 	static void plupp(){
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
+		highscore();
+	}
+	static void highscore(){
+		String string = "A HIGHSCORE";
+		for (SnakeServer snake : snakes) {
+			string+=snake.namn+";"+(snake.length-3);
+		}
+		sendAll(string);
 	}
 	static void gameover(String string){
 		sendAll("A GAMEOVER "+string);
