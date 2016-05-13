@@ -196,6 +196,7 @@ public class SnakeServer {
 					}
 					else{
 						snake.send("CLEAR");
+						snake.send("P " + pluppX + " " + pluppY);
 						for (SnakeServer snake2 : snakes) {
 							String string = "";
 							for (int i = 0; i < snake2.length; i++) {
@@ -205,7 +206,7 @@ public class SnakeServer {
 							}
 							snake.send("B "+snake2.färg.getRGB()+" "+string);
 						}
-						snake.send("P " + pluppX + " " + pluppY);
+						
 					}
 				}
 			}
