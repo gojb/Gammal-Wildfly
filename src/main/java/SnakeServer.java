@@ -50,9 +50,9 @@ public class SnakeServer {
 				}
 
 			}
-			
-			
-			
+
+
+
 			else if (string.equals("INIT")) {
 				färg = new Color(Integer.parseInt(scanner.next()));
 				namn = scanner.next();
@@ -133,7 +133,7 @@ public class SnakeServer {
 	}
 	public static void update() {
 		try{
-			if (!gameover) {
+			if (!gameover||!pause) {
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
 					for (int i = snake.length-1 ; i > 0; i--) {
@@ -191,21 +191,15 @@ public class SnakeServer {
 						snake.session.close();
 						return;
 					}
-					if (pause) {
-						snake.send("A PAUSE");
-					}
-					else{
-						snake.send("P " + pluppX + " " + pluppY);
-						for (SnakeServer snake2 : snakes) {
-							String string = "";
-							for (int i = 0; i < snake2.length; i++) {
-								int x = snake2.x[i];
-								int y = snake2.y[i];
-								string+=x+" "+y+" ";
-							}
-							snake.send("B "+snake2.färg.getRGB()+" "+string);
+					snake.send("P " + pluppX + " " + pluppY);
+					for (SnakeServer snake2 : snakes) {
+						String string = "";
+						for (int i = 0; i < snake2.length; i++) {
+							int x = snake2.x[i];
+							int y = snake2.y[i];
+							string+=x+" "+y+" ";
 						}
-						
+						snake.send("B "+snake2.färg.getRGB()+" "+string);
 					}
 				}
 			}
