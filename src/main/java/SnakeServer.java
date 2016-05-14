@@ -97,7 +97,7 @@ public class SnakeServer {
 		}
 	}
 	public void reset(){
-		if (gameover){
+		if (gameover||pause){
 			for (int i = 0; i < x.length; i++) {
 				x[i]=-1;
 				y[i]=-1;
@@ -118,7 +118,7 @@ public class SnakeServer {
 				y[0]=posy;
 			}
 			plupp();
-			send("A null");
+			send("A RESTART");
 			gameover=false;
 			pause=false;
 		}
