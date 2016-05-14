@@ -13,7 +13,7 @@ public class SnakeServer {
 	public static Random random = new Random();
 	public static final int height = 50;
 	public static final int width = 50;
-	public static boolean gameover,pause;
+	public static boolean gameover=true,pause;
 	public static int pluppX,pluppY;
 	public static String overname;
 	static{
@@ -98,28 +98,28 @@ public class SnakeServer {
 	}
 	public void reset(){
 		if (gameover){
-		for (int i = 0; i < x.length; i++) {
-			x[i]=-1;
-			y[i]=-1;
-		}
-		int posx = random.nextInt(width);
-		int posy = random.nextInt(height);
+			for (int i = 0; i < x.length; i++) {
+				x[i]=-1;
+				y[i]=-1;
+			}
+			int posx = random.nextInt(width);
+			int posy = random.nextInt(height);
 
-		if (posx>width*0.8||posx<width*0.2||posy>height*0.8||posy<height*0.2) {
-			reset();
-		}
-		else{		
-			String [] arr = {"up", "down", "right", "left"};
+			if (posx>width*0.8||posx<width*0.2||posy>height*0.8||posy<height*0.2) {
+				reset();
+			}
+			else{		
+				String [] arr = {"up", "down", "right", "left"};
 
-			riktning=arr[random.nextInt(arr.length)];
-			length = 3;
-			x[0]=posx;
-			y[0]=posy;
-		}
-		plupp();
-		send("A null");
-		gameover=false;
-		pause=false;
+				riktning=arr[random.nextInt(arr.length)];
+				length = 3;
+				x[0]=posx;
+				y[0]=posy;
+			}
+			plupp();
+			send("A null");
+			gameover=false;
+			pause=false;
 		}
 	}
 	public static void resetAll(){
