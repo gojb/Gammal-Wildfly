@@ -97,6 +97,7 @@ public class SnakeServer {
 		}
 	}
 	public void reset(){
+		if (gameover){
 		for (int i = 0; i < x.length; i++) {
 			x[i]=-1;
 			y[i]=-1;
@@ -119,6 +120,7 @@ public class SnakeServer {
 		send("A null");
 		gameover=false;
 		pause=false;
+		}
 	}
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
