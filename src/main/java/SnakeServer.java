@@ -116,8 +116,9 @@ public class SnakeServer {
 			y[0]=posy;
 		}
 		plupp();
-		send("A");
+		send("A  ");
 		gameover=false;
+		pause=false;
 	}
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
