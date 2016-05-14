@@ -89,6 +89,7 @@ public class SnakeServer {
 	@OnClose 
 	public void close(){
 		snakes.remove(this);
+		highscore();
 	}
 	public void send(String string) {
 		try {
