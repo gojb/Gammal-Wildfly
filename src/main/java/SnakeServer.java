@@ -29,6 +29,8 @@ public class SnakeServer {
 	public int inactive;
 	public int highscore;
 
+	boolean auto;
+
 
 	@OnOpen
 	public void open(Session session){
@@ -81,6 +83,9 @@ public class SnakeServer {
 				else {
 					sendAll("A UNPAUSE");
 				}
+			}
+			else if (string.equals("AUTO")) {
+				auto=!auto;
 			}
 			scanner.close();
 		} catch (Exception e) {
@@ -146,8 +151,8 @@ public class SnakeServer {
 		highscore();
 	}
 	static void highscore(){
-		
-		
+
+
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
@@ -156,7 +161,7 @@ public class SnakeServer {
 			sendAll( "H SET "+(snake.length-3)+ " "+snake.färg.getRGB() +" "+snake.highscore+" "+snake.namn );
 		}
 		sendAll( "H DONE ");
-		
+
 	}
 	static void gameover(String string){
 		sendAll("A GAMEOVER "+string);
@@ -191,12 +196,25 @@ public class SnakeServer {
 							return;
 						}
 					}
-					//Kolla om munnen åker ur bild
-					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
-						gameover(snake.namn);
-						//						sendAll("2");
-						return;
+					
+					if (snake.auto) {
+						if (snake.x[0]<0) {
+							snake.x[0]=width;
+						}
+						if (snake.x[0]>width) {
+							snake.x[0]=0;
+						}
 					}
+					else{
+						//Kolla om munnen åker ur bild
+						if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
+
+							gameover(snake.namn);
+							//						sendAll("2");
+							return;
+						}
+					}
+					
 					//Kolla om munnen nuddar annans kropp eller mun
 					for (SnakeServer snake2 : snakes) {
 						if (snake2!=snake) {
