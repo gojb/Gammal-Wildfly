@@ -224,7 +224,8 @@ public class SnakeServer {
 			}
 		}
 		catch(Exception e){
-			sendAll("UPDATEEXEPTION");
+			sendAll("SERVERUPDATEEXEPTION");
+			sendAll(e.getMessage());
 		}
 	}
 }
