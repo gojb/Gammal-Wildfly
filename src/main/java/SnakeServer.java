@@ -150,8 +150,8 @@ public class SnakeServer {
 		
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
-			if (snake.length>snake.highscore) {
-				snake.highscore=snake.length;
+			if (snake.length-3>snake.highscore) {
+				snake.highscore=snake.length-3;
 			}
 			sendAll( "H SET "+(snake.length-3)+ " "+snake.färg.getRGB() +" "+snake.highscore+" "+snake.namn );
 		}
