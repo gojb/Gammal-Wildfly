@@ -27,6 +27,7 @@ public class SnakeServer {
 	public Color färg;
 	public String namn;
 	public int inactive;
+	public int highscore;
 
 
 	@OnOpen
@@ -145,11 +146,17 @@ public class SnakeServer {
 		highscore();
 	}
 	static void highscore(){
+		
+		
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
-			sendAll( "H SET "+(snake.length-3)+ " "+snake.färg.getRGB() +" "+snake.namn);
+			if (snake.length>snake.highscore) {
+				snake.highscore=snake.length;
+			}
+			sendAll( "H SET "+(snake.length-3)+ " "+snake.färg.getRGB() +" "+snake.highscore+" "+snake.namn );
 		}
 		sendAll( "H DONE ");
+		
 	}
 	static void gameover(String string){
 		sendAll("A GAMEOVER "+string);
