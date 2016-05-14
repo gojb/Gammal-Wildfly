@@ -107,6 +107,7 @@ public class SnakeServer {
 
 			if (posx>width*0.8||posx<width*0.2||posy>height*0.8||posy<height*0.2) {
 				reset();
+				return;
 			}
 			else{		
 				String [] arr = {"up", "down", "right", "left"};
