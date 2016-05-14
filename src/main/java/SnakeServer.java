@@ -116,7 +116,7 @@ public class SnakeServer {
 			y[0]=posy;
 		}
 		plupp();
-		send("A  ");
+		send("A null");
 		gameover=false;
 		pause=false;
 	}
