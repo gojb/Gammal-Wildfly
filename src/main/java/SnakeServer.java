@@ -60,6 +60,7 @@ public class SnakeServer {
 				snakes.add(this);
 				reset();
 				send("START");
+				highscore();
 
 			}
 			else if (string.equals("START")) {
