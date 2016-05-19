@@ -148,8 +148,6 @@ public class SnakeServer {
 		highscore();
 	}
 	static void highscore(){
-
-
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
@@ -160,8 +158,8 @@ public class SnakeServer {
 		sendAll( "H DONE ");
 
 	}
-	static void gameover(SnakeServer snake){
-		sendAll("A GAMEOVER "+snake.namn);
+	static void gameover(SnakeServer snake,int i){
+		sendAll("A GAMEOVER "+snake.namn +" ("+ i+")");
 		snake.reset();
 	}
 	public static void update() {
@@ -189,23 +187,17 @@ public class SnakeServer {
 				}
 				//Förlustkontroll
 				for (SnakeServer snake : snakes) {
+					//Kolla om munnen åker ur bild
+					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
+						gameover(snake,1);
+						return;
+					}
 					for (int i = 1; i < snake.length; i++) {
 						//Kolla om munnen nuddar egna kroppen
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
-							gameover(snake);
-							//							sendAll("1");
+							gameover(snake,2);
 							return;
 						}
-					}
-
-
-					//Kolla om munnen åker ur bild
-					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
-
-						gameover(snake);
-						//						sendAll("2");
-						return;
-
 					}
 
 					//Kolla om munnen nuddar annans kropp eller mun
@@ -213,8 +205,7 @@ public class SnakeServer {
 						if (snake2!=snake) {
 							for (int i = 0; i < snake2.length; i++) {
 								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
-									gameover(snake);
-									//									sendAll("3");
+									gameover(snake,3);
 									return;
 								}
 							}
