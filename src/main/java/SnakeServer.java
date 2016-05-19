@@ -157,6 +157,7 @@ public class SnakeServer {
 	static void highscore(){
 
 
+		
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
