@@ -147,8 +147,10 @@ public class SnakeServer {
 		}
 	}
 	static void plupp(){
+
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
+		sendAll("P " + pluppX + " " + pluppY);
 		highscore();
 	}
 	static void highscore(){
@@ -246,15 +248,15 @@ public class SnakeServer {
 						snake.session.close();
 						return;
 					}
-					snake.send("P " + pluppX + " " + pluppY);
-					for (SnakeServer snake2 : snakes) {
+					for (int j = 0; j < snakes.size(); j++) {
+						SnakeServer snake2 = snakes.get(j);
 						String string = "";
 						for (int i = 0; i < snake2.length; i++) {
 							int x = snake2.x[i];
 							int y = snake2.y[i];
 							string+=x+" "+y+" ";
 						}
-						snake.send("B "+snake2.färg.getRGB()+" "+string);
+						snake.send("B "+j+" "+snake2.färg.getRGB()+" "+string);
 					}
 
 				}
