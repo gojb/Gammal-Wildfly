@@ -126,11 +126,11 @@ public class SnakeServer {
 		}
 		try {
 			Thread.sleep(1000);
-			send("A RESTART");
+			sendAll("A RESTART");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			send("A RESTART");
+			sendAll("A RESTART");
 		}
 		
 	}
