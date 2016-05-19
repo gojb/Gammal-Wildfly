@@ -27,8 +27,9 @@ public class SnakeServer {
 	public String namn;
 	public int inactive;
 	public int highscore;
+	public int gameover;
 
-	boolean auto,gameover;
+	boolean auto;
 
 
 	@OnOpen
@@ -124,13 +125,9 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-		try {
-			Thread.sleep(1000);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		send("A RESTART");
+
+
+		gameover=100;
 
 
 	}
@@ -138,7 +135,7 @@ public class SnakeServer {
 
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
-			snakeServer.gameover=false;
+			snakeServer.gameover=10;
 		}
 		plupp();
 		pause=false;
@@ -176,18 +173,23 @@ public class SnakeServer {
 			if (!pause) {
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
-					for (int i = snake.length-1 ; i > 0; i--) {
-						snake.x[i]=snake.x[i-1];
-						snake.y[i]=snake.y[i-1];
+					if (snake.gameover<0) {
+						for (int i = snake.length-1 ; i > 0; i--) {
+							snake.x[i]=snake.x[i-1];
+							snake.y[i]=snake.y[i-1];
+						}
+						if (snake.riktning.equals("down")) 
+							snake.y[0]+=1;
+						else if (snake.riktning.equals("up"))
+							snake.y[0]-=1;
+						else if (snake.riktning.equals("right"))
+							snake.x[0]+=1;
+						else if (snake.riktning.equals("left"))
+							snake.x[0]-=1;
 					}
-					if (snake.riktning.equals("down")) 
-						snake.y[0]+=1;
-					else if (snake.riktning.equals("up"))
-						snake.y[0]-=1;
-					else if (snake.riktning.equals("right"))
-						snake.x[0]+=1;
-					else if (snake.riktning.equals("left"))
-						snake.x[0]-=1;
+					else if (snake.gameover--==0) {
+						sendAll("A RESTART");
+					}
 				}
 				//Förlustkontroll
 				for (SnakeServer snake : snakes) {
