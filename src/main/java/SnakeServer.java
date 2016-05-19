@@ -28,7 +28,7 @@ public class SnakeServer {
 	public int inactive;
 	public int highscore;
 
-	boolean auto;
+	boolean auto,gameover;
 
 
 	@OnOpen
@@ -124,7 +124,8 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-		sendAll("A RESTART");
+
+		send("A RESTART");
 
 
 	}
@@ -132,10 +133,10 @@ public class SnakeServer {
 
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
+			snakeServer.gameover=false;
 		}
 		plupp();
 		pause=false;
-		timer.start();
 
 	}
 	public static void sendAll(String message){
@@ -149,7 +150,6 @@ public class SnakeServer {
 		highscore();
 	}
 	static void highscore(){
-
 
 
 		sendAll( "H RESET");
