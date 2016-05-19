@@ -124,15 +124,9 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-		try {
-			Thread.sleep(1000);
-			sendAll("A RESTART");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			sendAll("A RESTART");
-		}
-		
+		sendAll("A RESTART");
+
+
 	}
 	public static void resetAll(){
 
@@ -157,7 +151,7 @@ public class SnakeServer {
 	static void highscore(){
 
 
-		
+
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
