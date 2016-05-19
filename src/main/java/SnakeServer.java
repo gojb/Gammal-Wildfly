@@ -13,9 +13,8 @@ public class SnakeServer {
 	public static Random random = new Random();
 	public static final int height = 50;
 	public static final int width = 50;
-	public static boolean gameover=true,pause;
+	public static boolean pause;
 	public static int pluppX,pluppY;
-	public static String overname;
 	static{
 		timer.start();
 	}
@@ -29,7 +28,7 @@ public class SnakeServer {
 	public int inactive;
 	public int highscore;
 
-	boolean auto;
+	boolean auto,gameover;
 
 
 	@OnOpen
@@ -125,20 +124,23 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-
+		try {
+			wait(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		send("A RESTART");
-
-
 	}
 	public static void resetAll(){
-		if (gameover||pause){
-			for (SnakeServer snakeServer : snakes) {
-				snakeServer.reset();
-			}
-			plupp();
-			gameover=false;
-			pause=false;
+
+		for (SnakeServer snakeServer : snakes) {
+			snakeServer.reset();
+			snakeServer.gameover=false;
 		}
+		plupp();
+		pause=false;
+
 	}
 	public static void sendAll(String message){
 		for (SnakeServer snake : snakes) {
@@ -163,14 +165,13 @@ public class SnakeServer {
 		sendAll( "H DONE ");
 
 	}
-	static void gameover(String string){
-		sendAll("A GAMEOVER "+string);
-		gameover=true;
-		overname=string;
+	static void gameover(SnakeServer snake){
+		sendAll("A GAMEOVER "+snake.namn);
+		snake.reset();
 	}
 	public static void update() {
 		try{
-			if (!gameover&&!pause) {
+			if (!pause) {
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
 					for (int i = snake.length-1 ; i > 0; i--) {
@@ -191,12 +192,12 @@ public class SnakeServer {
 					for (int i = 1; i < snake.length; i++) {
 						//Kolla om munnen nuddar egna kroppen
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
-							gameover(snake.namn);
+							gameover(snake);
 							//							sendAll("1");
 							return;
 						}
 					}
-					
+
 					if (snake.auto) {
 						if (snake.x[0]<0) {
 							snake.x[0]=width;
@@ -209,18 +210,18 @@ public class SnakeServer {
 						//Kolla om munnen åker ur bild
 						if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
 
-							gameover(snake.namn);
+							gameover(snake);
 							//						sendAll("2");
 							return;
 						}
 					}
-					
+
 					//Kolla om munnen nuddar annans kropp eller mun
 					for (SnakeServer snake2 : snakes) {
 						if (snake2!=snake) {
 							for (int i = 0; i < snake2.length; i++) {
 								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
-									gameover(snake.namn);
+									gameover(snake);
 									//									sendAll("3");
 									return;
 								}
