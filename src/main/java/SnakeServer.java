@@ -63,7 +63,6 @@ public class SnakeServer {
 				snakes.add(this);
 				reset();
 				send("START");
-				highscore();
 				gameover=-1;
 
 			}
@@ -126,7 +125,7 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-
+		highscore();
 
 		gameover=10;
 
