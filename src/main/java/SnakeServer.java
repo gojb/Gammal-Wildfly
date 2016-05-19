@@ -124,7 +124,12 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-
+		try {
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		send("A RESTART");
 
 
