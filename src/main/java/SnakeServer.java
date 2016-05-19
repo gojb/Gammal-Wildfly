@@ -126,6 +126,7 @@ public class SnakeServer {
 		}
 		try {
 			Thread.sleep(1000);
+			send("A RESTART");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
