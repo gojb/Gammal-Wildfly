@@ -141,6 +141,7 @@ public class SnakeServer {
 		}
 		plupp();
 		pause=false;
+		timer.start();
 
 	}
 	public static void sendAll(String message){
