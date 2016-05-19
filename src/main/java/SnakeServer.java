@@ -64,6 +64,7 @@ public class SnakeServer {
 				reset();
 				send("START");
 				highscore();
+				gameover=-1;
 
 			}
 			else if (string.equals("START")) {
@@ -135,7 +136,7 @@ public class SnakeServer {
 
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
-			snakeServer.gameover=10;
+			snakeServer.gameover=-1;
 		}
 		plupp();
 		pause=false;
