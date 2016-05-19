@@ -186,17 +186,18 @@ public class SnakeServer {
 					}
 				}
 				//Förlustkontroll
-				for (SnakeServer snake : snakes) {
+				loop:for (SnakeServer snake : snakes) {
 					//Kolla om munnen åker ur bild
 					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
 						gameover(snake,1);
-						return;
+						break loop;
 					}
+					
+					//Kolla om munnen nuddar egna kroppen
 					for (int i = 1; i < snake.length; i++) {
-						//Kolla om munnen nuddar egna kroppen
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
 							gameover(snake,2);
-							return;
+							break loop;
 						}
 					}
 
@@ -206,7 +207,7 @@ public class SnakeServer {
 							for (int i = 0; i < snake2.length; i++) {
 								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
 									gameover(snake,3);
-									return;
+									break loop;
 								}
 							}
 						}
@@ -221,10 +222,6 @@ public class SnakeServer {
 				}
 				//Skicka data till spelarna
 				for (SnakeServer snake : snakes) {
-					//					if (snake.inactive++==100) {
-					//						snake.session.close();
-					//						return;
-					//					}
 					for (int j = 0; j < snakes.size(); j++) {
 						SnakeServer snake2 = snakes.get(j);
 						String string = "";
