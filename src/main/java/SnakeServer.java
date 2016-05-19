@@ -28,7 +28,7 @@ public class SnakeServer {
 	public int inactive;
 	public int highscore;
 
-	boolean auto,gameover;
+	boolean auto;
 
 
 	@OnOpen
@@ -125,18 +125,18 @@ public class SnakeServer {
 			y[0]=posy;
 		}
 		try {
-			wait(1000);
-		} catch (InterruptedException e) {
+			Thread.sleep(1000);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			send("A RESTART");
 		}
-		send("A RESTART");
+		
 	}
 	public static void resetAll(){
 
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
-			snakeServer.gameover=false;
 		}
 		plupp();
 		pause=false;
