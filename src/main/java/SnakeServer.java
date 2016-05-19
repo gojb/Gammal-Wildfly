@@ -19,17 +19,14 @@ public class SnakeServer {
 		timer.start();
 	}
 
-	public Session session;
-	public int[] x=new int[1000],y=new int[1000];
-	public int length;
-	public String riktning;
-	public Color färg;
-	public String namn;
-	public int inactive;
-	public int highscore;
-	public int gameover;
-
-	boolean auto;
+	private Session session;
+	private int[] x=new int[1000],y=new int[1000];
+	private int length;
+	private String riktning;
+	private Color färg;
+	private String namn;
+	private int highscore;
+	private int gameover;
 
 
 	@OnOpen
@@ -40,7 +37,6 @@ public class SnakeServer {
 	}
 	@OnMessage
 	public void in(String message){
-		inactive=0;
 		Scanner scanner;
 		try {
 			scanner = new Scanner(message);
@@ -84,9 +80,6 @@ public class SnakeServer {
 				else {
 					sendAll("A UNPAUSE");
 				}
-			}
-			else if (string.equals("AUTO")) {
-				auto=!auto;
 			}
 			scanner.close();
 		} catch (Exception e) {
@@ -205,22 +198,14 @@ public class SnakeServer {
 						}
 					}
 
-					if (snake.auto) {
-						if (snake.x[0]<0) {
-							snake.x[0]=width;
-						}
-						if (snake.x[0]>width) {
-							snake.x[0]=0;
-						}
-					}
-					else{
-						//Kolla om munnen åker ur bild
-						if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
 
-							gameover(snake);
-							//						sendAll("2");
-							return;
-						}
+					//Kolla om munnen åker ur bild
+					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
+
+						gameover(snake);
+						//						sendAll("2");
+						return;
+
 					}
 
 					//Kolla om munnen nuddar annans kropp eller mun
@@ -245,10 +230,10 @@ public class SnakeServer {
 				}
 				//Skicka data till spelarna
 				for (SnakeServer snake : snakes) {
-					if (snake.inactive++==100) {
-						snake.session.close();
-						return;
-					}
+					//					if (snake.inactive++==100) {
+					//						snake.session.close();
+					//						return;
+					//					}
 					for (int j = 0; j < snakes.size(); j++) {
 						SnakeServer snake2 = snakes.get(j);
 						String string = "";
