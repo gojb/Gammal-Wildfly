@@ -128,7 +128,7 @@ public class SnakeServer {
 		}
 
 
-		gameover=100;
+		gameover=10;
 
 
 	}
