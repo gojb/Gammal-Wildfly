@@ -96,6 +96,7 @@ public class SnakeServer {
 			session.getBasicRemote().sendText(string);
 		} catch (Exception e) {
 			e.printStackTrace();
+			snakes.remove(this);
 		}
 	}
 	public void reset(){
@@ -186,18 +187,18 @@ public class SnakeServer {
 					}
 				}
 				//Förlustkontroll
-				loop:for (SnakeServer snake : snakes) {
+				gameoverloop:for (SnakeServer snake : snakes) {
 					//Kolla om munnen åker ur bild
 					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
 						gameover(snake,1);
-						break loop;
+						break gameoverloop;
 					}
 					
 					//Kolla om munnen nuddar egna kroppen
 					for (int i = 1; i < snake.length; i++) {
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
 							gameover(snake,2);
-							break loop;
+							break gameoverloop;
 						}
 					}
 
@@ -207,7 +208,7 @@ public class SnakeServer {
 							for (int i = 0; i < snake2.length; i++) {
 								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
 									gameover(snake,3);
-									break loop;
+									break gameoverloop;
 								}
 							}
 						}
