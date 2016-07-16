@@ -232,7 +232,7 @@ public class SnakeServer {
 							int y = snake2.y[i];
 							string+=x+" "+y+" ";
 						}
-						snake.send("B "+j+" "+snake2.färg.getRGB()+" "+string);
+						snake.send("B "+j+" "+Integer.toHexString(snake2.färg.getRGB()).substring(2)+" "+string);
 					}
 
 				}
