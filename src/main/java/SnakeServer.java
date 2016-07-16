@@ -155,7 +155,7 @@ public class SnakeServer {
 			if (snake.length-3>snake.highscore) {
 				snake.highscore=snake.length-3;
 			}
-			sendAll( "H SET "+(snake.length-3)+ " "+snake.färg.getRGB() +" "+snake.highscore+" "+snake.namn );
+			sendAll( "H SET "+(snake.length-3)+ " "+Integer.toHexString(snake.färg.getRGB()).substring(2) +" "+snake.highscore+" "+snake.namn );
 		}
 		sendAll( "H DONE ");
 
