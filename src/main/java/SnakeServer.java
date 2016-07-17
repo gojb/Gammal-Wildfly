@@ -51,8 +51,6 @@ public class SnakeServer {
 
 			}
 
-
-
 			else if (string.equals("INIT")) {
 				färg = Color.decode("#"+scanner.next());
 				
