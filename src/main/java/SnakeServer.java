@@ -148,9 +148,11 @@ public class SnakeServer {
 			public int compare(SnakeServer o1, SnakeServer o2) {
 				// TODO Auto-generated method stub
 				int one = (o1.length-o2.length);
+				
 		        return one == 0 ? (o1.highscore-o2.highscore) : one;
 			}
 		});
+		Collections.reverse(snakes);
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
 				snake.highscore=snake.length-3;
