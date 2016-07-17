@@ -142,6 +142,7 @@ public class SnakeServer {
 	static void highscore(){
 		sendAll("P " + pluppX + " " + pluppY);
 		sendAll( "H RESET");
+		ArrayList<SnakeServer> snakes=new ArrayList<>(SnakeServer.snakes);
 		snakes.sort(new Comparator<SnakeServer>() {
 			@Override
 			public int compare(SnakeServer o1, SnakeServer o2) {
