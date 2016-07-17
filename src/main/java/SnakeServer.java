@@ -227,19 +227,21 @@ public class SnakeServer {
 					}
 				}
 				//Skicka data till spelarna
-				for (SnakeServer snake : snakes) {
-					for (int j = 0; j < snakes.size(); j++) {
-						SnakeServer snake2 = snakes.get(j);
-						String string = "";
-						for (int i = 0; i < snake2.length; i++) {
-							int x = snake2.x[i];
-							int y = snake2.y[i];
-							string+=x+" "+y+" ";
-						}
-						snake.send("B "+j+" "+Integer.toHexString(snake2.färg.getRGB()).substring(2)+" "+string);
+				String data="B ";
+				for (int j = 0; j < snakes.size(); j++) {
+					if (j>0) {
+						data+=";";
 					}
-
+					SnakeServer snake = snakes.get(j);
+					String string = "";
+					for (int i = 0; i < snake.length; i++) {
+						int x = snake.x[i];
+						int y = snake.y[i];
+						string+=" "+x+" "+y;
+					}
+					data+=(Integer.toHexString(snake.färg.getRGB()).substring(2)+string);
 				}
+				sendAll(data);
 			}
 		}
 		catch(Exception e){
