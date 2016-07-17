@@ -50,6 +50,7 @@ public class SnakeServer {
 					riktning=string2;
 				}
 
+				
 			}
 
 			else if (string.equals("INIT")) {
