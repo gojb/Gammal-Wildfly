@@ -117,9 +117,7 @@ public class SnakeServer {
 			y[0]=posy;
 		}
 		highscore();
-		send("P " + pluppX + " " + pluppY);
 		fördrjöjning=10;
-
 
 	}
 	public static void resetAll(){
@@ -140,10 +138,10 @@ public class SnakeServer {
 	static void plupp(){
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
-		sendAll("P " + pluppX + " " + pluppY);
 		highscore();
 	}
 	static void highscore(){
+		sendAll("P " + pluppX + " " + pluppY);
 		sendAll( "H RESET");
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
