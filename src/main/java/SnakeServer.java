@@ -142,6 +142,13 @@ public class SnakeServer {
 	static void highscore(){
 		sendAll("P " + pluppX + " " + pluppY);
 		sendAll( "H RESET");
+		snakes.sort(new Comparator<SnakeServer>() {
+			@Override
+			public int compare(SnakeServer o1, SnakeServer o2) {
+				// TODO Auto-generated method stub
+				return 10000*(o1.length-o2.length)+(o1.highscore-o2.highscore);
+			}
+		});
 		for (SnakeServer snake : snakes) {
 			if (snake.length-3>snake.highscore) {
 				snake.highscore=snake.length-3;
