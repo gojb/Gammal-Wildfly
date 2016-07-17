@@ -156,15 +156,17 @@ public class SnakeServer {
 		snake.reset();
 	}
 	public static void update() {
+		try {
 		if (removeList.size()>0) {
 			for (SnakeServer snakeServer : removeList) {
-				try {
+				
 					snakes.remove(snakeServer);
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
-		}
+		} 
+		catch (Exception e) {
+					e.printStackTrace();
+				}
 		try{
 			if (!pause) {
 				//Gör alla förflyttningar
