@@ -164,6 +164,7 @@ public class SnakeServer {
 	public static void update() {
 		try{
 			if (!pause) {
+				ArrayList<SnakeServer> snakes = new ArrayList<>(SnakeServer.snakes);
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
 					if (snake.gameover<0) {
@@ -185,6 +186,7 @@ public class SnakeServer {
 					}
 				}
 				//Förlustkontroll
+				
 				gameoverloop:for (SnakeServer snake : snakes) {
 					//Kolla om munnen åker ur bild
 					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
