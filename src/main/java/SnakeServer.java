@@ -8,7 +8,8 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/snake")
 public class SnakeServer {
-	public static ArrayList<SnakeServer> snakes = new ArrayList<SnakeServer>();
+	public static ArrayList<SnakeServer> snakes = new ArrayList<SnakeServer>(),
+			removeList= new ArrayList<SnakeServer>();
 	public static Timer timer = new Timer(100,e->update());
 	public static Random random = new Random();
 	public static final int height = 50;
@@ -53,7 +54,7 @@ public class SnakeServer {
 
 			else if (string.equals("INIT")) {
 				färg = Color.decode("#"+scanner.next());
-				
+
 				scanner.useDelimiter("\\z"); 
 				namn = scanner.next().substring(1);
 				snakes.add(this);
@@ -86,15 +87,14 @@ public class SnakeServer {
 	}
 	@OnClose 
 	public void close(){
-		snakes.remove(this);
-		highscore();
+		removeList.add(this);
 	}
 	public void send(String string) {
 		try {
 			session.getBasicRemote().sendText(string);
 		} catch (Exception e) {
 			e.printStackTrace();
-			snakes.remove(this);
+			removeList.add(this);
 		}
 	}
 	public void reset(){
@@ -162,9 +162,18 @@ public class SnakeServer {
 		snake.reset();
 	}
 	public static void update() {
+		if (removeList.size()>0) {
+			for (SnakeServer snakeServer : removeList) {
+				try {
+					snakes.remove(snakeServer);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		try{
 			if (!pause) {
-				ArrayList<SnakeServer> snakes = new ArrayList<>(SnakeServer.snakes);
+				
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
 					if (snake.gameover<0) {
@@ -186,14 +195,14 @@ public class SnakeServer {
 					}
 				}
 				//Förlustkontroll
-				
+
 				gameoverloop:for (SnakeServer snake : snakes) {
 					//Kolla om munnen åker ur bild
 					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
 						gameover(snake,1);
 						break gameoverloop;
 					}
-					
+
 					//Kolla om munnen nuddar egna kroppen
 					for (int i = 1; i < snake.length; i++) {
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
