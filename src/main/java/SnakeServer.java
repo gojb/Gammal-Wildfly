@@ -17,7 +17,6 @@ public class SnakeServer {
 	public static int pluppX,pluppY;
 	static{
 		timer.start();
-		plupp();
 	}
 
 	private Session session;
