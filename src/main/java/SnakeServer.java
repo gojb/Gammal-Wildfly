@@ -28,7 +28,7 @@ public class SnakeServer {
 	private Color färg;
 	private String namn;
 	private int highscore;
-	private int gameover;
+	private int fördrjöjning;
 
 
 	@OnOpen
@@ -54,13 +54,12 @@ public class SnakeServer {
 
 			else if (string.equals("INIT")) {
 				färg = Color.decode("#"+scanner.next());
-
 				scanner.useDelimiter("\\z"); 
 				namn = scanner.next().substring(1);
 				snakes.add(this);
 				reset();
 				send("START");
-				gameover=-1;
+				fördrjöjning=-1;
 			}
 			else if (string.equals("START")) {
 				timer.start();
@@ -98,7 +97,6 @@ public class SnakeServer {
 		}
 	}
 	public void reset(){
-
 		for (int i = 0; i < x.length; i++) {
 			x[i]=-1;
 			y[i]=-1;
@@ -119,8 +117,8 @@ public class SnakeServer {
 			y[0]=posy;
 		}
 		highscore();
-
-		gameover=10;
+		send("P " + pluppX + " " + pluppY);
+		fördrjöjning=10;
 
 
 	}
@@ -128,7 +126,7 @@ public class SnakeServer {
 
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
-			snakeServer.gameover=-1;
+			snakeServer.fördrjöjning=-1;
 		}
 		plupp();
 		pause=false;
@@ -140,7 +138,6 @@ public class SnakeServer {
 		}
 	}
 	static void plupp(){
-
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
 		sendAll("P " + pluppX + " " + pluppY);
@@ -173,10 +170,9 @@ public class SnakeServer {
 		}
 		try{
 			if (!pause) {
-				
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
-					if (snake.gameover<0) {
+					if (snake.fördrjöjning<0) {
 						for (int i = snake.length-1 ; i > 0; i--) {
 							snake.x[i]=snake.x[i-1];
 							snake.y[i]=snake.y[i-1];
@@ -190,7 +186,7 @@ public class SnakeServer {
 						else if (snake.riktning.equals("left"))
 							snake.x[0]-=1;
 					}
-					else if (snake.gameover--==0) {
+					else if (snake.fördrjöjning--==0) {
 						sendAll("A RESTART");
 					}
 				}
