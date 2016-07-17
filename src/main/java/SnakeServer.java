@@ -28,7 +28,7 @@ public class SnakeServer {
 	private Color färg;
 	private String namn;
 	private int highscore;
-	private int fördrjöjning;
+	private int fördröjning;
 
 
 	@OnOpen
@@ -50,7 +50,7 @@ public class SnakeServer {
 					riktning=string2;
 				}
 
-				
+
 			}
 
 			else if (string.equals("INIT")) {
@@ -60,7 +60,7 @@ public class SnakeServer {
 				snakes.add(this);
 				reset();
 				send("START");
-				fördrjöjning=-1;
+				fördröjning=-1;
 			}
 			else if (string.equals("START")) {
 				timer.start();
@@ -118,13 +118,13 @@ public class SnakeServer {
 			y[0]=posy;
 		}
 		highscore();
-		fördrjöjning=10;
+		fördröjning=10;
 
 	}
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
-			snakeServer.fördrjöjning=-1;
+			snakeServer.fördröjning=-1;
 		}
 		plupp();
 		pause=false;
@@ -157,21 +157,21 @@ public class SnakeServer {
 	}
 	public static void update() {
 		try {
-		if (removeList.size()>0) {
-			for (SnakeServer snakeServer : removeList) {
-				
+			if (removeList.size()>0) {
+				for (SnakeServer snakeServer : removeList) {
+
 					snakes.remove(snakeServer);
 				}
 			}
 		} 
 		catch (Exception e) {
-					e.printStackTrace();
-				}
+			e.printStackTrace();
+		}
 		try{
 			if (!pause) {
 				//Gör alla förflyttningar
 				for (SnakeServer snake : snakes) {
-					if (snake.fördrjöjning<0) {
+					if (snake.fördröjning<0) {
 						for (int i = snake.length-1 ; i > 0; i--) {
 							snake.x[i]=snake.x[i-1];
 							snake.y[i]=snake.y[i-1];
@@ -185,7 +185,7 @@ public class SnakeServer {
 						else if (snake.riktning.equals("left"))
 							snake.x[0]-=1;
 					}
-					else if (snake.fördrjöjning--==0) {
+					else if (snake.fördröjning--==0) {
 						sendAll("A RESTART");
 					}
 					snake.senasteriktning=snake.riktning;
