@@ -147,7 +147,8 @@ public class SnakeServer {
 			@Override
 			public int compare(SnakeServer o1, SnakeServer o2) {
 				// TODO Auto-generated method stub
-				return 10000*(o1.length-o2.length)+(o1.highscore-o2.highscore);
+				int one = (o1.length-o2.length);
+		        return one == 0 ? (o1.highscore-o2.highscore) : one;
 			}
 		});
 		for (SnakeServer snake : snakes) {
