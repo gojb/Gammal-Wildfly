@@ -61,8 +61,6 @@ public class SnakeServer {
 				reset();
 				send("START");
 				gameover=-1;
-				plupp();
-
 			}
 			else if (string.equals("START")) {
 				timer.start();
