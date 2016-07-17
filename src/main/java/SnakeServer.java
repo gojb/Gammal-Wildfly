@@ -24,7 +24,7 @@ public class SnakeServer {
 	private Session session;
 	private int[] x=new int[1000],y=new int[1000];
 	private int length;
-	private String riktning;
+	private String riktning,senasteriktning;
 	private Color färg;
 	private String namn;
 	private int highscore;
@@ -45,8 +45,8 @@ public class SnakeServer {
 			String string=scanner.next();
 			if (string.equals("R")) {
 				String string2 = scanner.next();
-				if (!((riktning.equals("up")||riktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
-						(riktning.equals("left")||riktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
+				if (!((senasteriktning.equals("up")||senasteriktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
+						(senasteriktning.equals("left")||senasteriktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
 					riktning=string2;
 				}
 
@@ -121,14 +121,12 @@ public class SnakeServer {
 
 	}
 	public static void resetAll(){
-
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
 			snakeServer.fördrjöjning=-1;
 		}
 		plupp();
 		pause=false;
-
 	}
 	public static void sendAll(String message){
 		for (SnakeServer snake : snakes) {
@@ -187,6 +185,7 @@ public class SnakeServer {
 					else if (snake.fördrjöjning--==0) {
 						sendAll("A RESTART");
 					}
+					snake.senasteriktning=snake.riktning;
 				}
 				//Förlustkontroll
 
