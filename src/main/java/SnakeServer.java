@@ -61,6 +61,7 @@ public class SnakeServer {
 				reset();
 				send("START");
 				fördröjning=-1;
+				datasend();
 			}
 			else if (string.equals("START")) {
 				timer.start();
@@ -148,8 +149,8 @@ public class SnakeServer {
 			public int compare(SnakeServer o1, SnakeServer o2) {
 				// TODO Auto-generated method stub
 				int one = (o1.length-o2.length);
-				
-		        return one == 0 ? (o1.highscore-o2.highscore) : one;
+
+				return one == 0 ? (o1.highscore-o2.highscore) : one;
 			}
 		});
 		Collections.reverse(snakes);
@@ -237,27 +238,30 @@ public class SnakeServer {
 						plupp();
 					}
 				}
-				//Skicka data till spelarna
-				String data="B ";
-				for (int j = 0; j < snakes.size(); j++) {
-					if (j>0) {
-						data+=";";
-					}
-					SnakeServer snake = snakes.get(j);
-					String string = "";
-					for (int i = 0; i < snake.length; i++) {
-						int x = snake.x[i];
-						int y = snake.y[i];
-						string+=" "+x+" "+y;
-					}
-					data+=(Integer.toHexString(snake.färg.getRGB()).substring(2)+string);
-				}
-				sendAll(data);
+				datasend();
 			}
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
 			sendAll(e.getMessage());
 		}
+	}
+	private static void datasend() {
+		//Skicka data till spelarna
+		String data="B ";
+		for (int j = 0; j < snakes.size(); j++) {
+			if (j>0) {
+				data+=";";
+			}
+			SnakeServer snake = snakes.get(j);
+			String string = "";
+			for (int i = 0; i < snake.length; i++) {
+				int x = snake.x[i];
+				int y = snake.y[i];
+				string+=" "+x+" "+y;
+			}
+			data+=(Integer.toHexString(snake.färg.getRGB()).substring(2)+string);
+		}
+		sendAll(data);
 	}
 }
