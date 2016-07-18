@@ -62,6 +62,9 @@ public class SnakeServer {
 				send("START");
 				fördröjning=-1;
 				datasend();
+				if (pause) {
+					send("A PAUSE");
+				}
 			}
 			else if (string.equals("START")) {
 				timer.start();
