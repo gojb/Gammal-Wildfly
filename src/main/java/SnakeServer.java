@@ -44,11 +44,10 @@ public class SnakeServer {
 			scanner = new Scanner(message);
 			String string=scanner.next();
 			if (string.equals("R")) {
-				String string2 = scanner.next();
-				if (!((senasteriktning.equals("up")||senasteriktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
-						(senasteriktning.equals("left")||senasteriktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
-					riktning=string2;
-					send("R "+string2);
+				String nyRiktning = scanner.next();
+				if (!((senasteriktning.equals("up")||senasteriktning.equals("down"))&&(nyRiktning.equals("up")||nyRiktning.equals("down"))||
+						(senasteriktning.equals("left")||senasteriktning.equals("right"))&&(nyRiktning.equals("left")||nyRiktning.equals("right")))) {
+					setRiktning(nyRiktning);
 				}
 
 
@@ -116,8 +115,7 @@ public class SnakeServer {
 		}
 		else{		
 			String [] arr = {"up", "down", "right", "left"};
-
-			riktning=arr[random.nextInt(arr.length)];
+			setRiktning(arr[random.nextInt(arr.length)]);
 			length = 3;
 			x[0]=posx;
 			y[0]=posy;
@@ -125,6 +123,10 @@ public class SnakeServer {
 		highscore();
 		fördröjning=10;
 
+	}
+	public void setRiktning(String nyRiktning) {
+		riktning=nyRiktning;
+		send("R "+nyRiktning);
 	}
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
