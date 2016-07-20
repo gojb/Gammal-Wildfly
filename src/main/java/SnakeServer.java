@@ -48,6 +48,7 @@ public class SnakeServer {
 				if (!((senasteriktning.equals("up")||senasteriktning.equals("down"))&&(string2.equals("up")||string2.equals("down"))||
 						(senasteriktning.equals("left")||senasteriktning.equals("right"))&&(string2.equals("left")||string2.equals("right")))) {
 					riktning=string2;
+					send("R "+string2);
 				}
 
 
