@@ -3,13 +3,11 @@ import java.awt.Color;
 import java.util.*;
 
 import javax.swing.Timer;
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/snake")
 public class SnakeServer {
-	public static ArrayList<SnakeServer> snakes = new ArrayList<SnakeServer>(),
-			removeList= new ArrayList<SnakeServer>();
+	public static ArrayList<SnakeServer> snakes = new ArrayList<>(),
+			removeList= new ArrayList<>();
 	public static Timer timer = new Timer(100,e->update());
 	public static Random random = new Random();
 	public static final int height = 50;
@@ -19,6 +17,7 @@ public class SnakeServer {
 	static{
 		timer.start();
 		plupp();
+		
 	}
 
 	private Session session;
@@ -124,7 +123,7 @@ public class SnakeServer {
 		fördröjning=10;
 
 	}
-	public void setRiktning(String nyRiktning) {
+	private void setRiktning(String nyRiktning) {
 		riktning=nyRiktning;
 		send("R "+nyRiktning);
 	}
