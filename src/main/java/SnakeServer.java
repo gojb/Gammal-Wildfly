@@ -124,7 +124,7 @@ public class SnakeServer {
 		fördröjning=10;
 
 	}
-	public void setRiktning(String nyRiktning) {
+	private void setRiktning(String nyRiktning) {
 		riktning=nyRiktning;
 		send("R "+nyRiktning);
 	}
