@@ -8,8 +8,8 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/snake")
 public class SnakeServer {
-	public static ArrayList<SnakeServer> snakes = new ArrayList<SnakeServer>(),
-			removeList= new ArrayList<SnakeServer>();
+	public static ArrayList<SnakeServer> snakes = new ArrayList<>(),
+			removeList= new ArrayList<>();
 	public static Timer timer = new Timer(100,e->update());
 	public static Random random = new Random();
 	public static final int height = 50;
@@ -233,7 +233,7 @@ public class SnakeServer {
 									gameover(snake,"nuddaAnnan");
 									break gameoverloop;
 								}
-							}
+							} 
 						}
 					}
 				}
