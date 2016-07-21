@@ -262,7 +262,7 @@ public class SnakeServer {
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
-			sendAll(e.getMessage());
+			sendAll(e.toString());
 		}
 	}
 	private static void datasend() {
