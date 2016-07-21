@@ -45,10 +45,17 @@ public class SnakeServer {
 			String string=scanner.next();
 			if (string.equals("R")) {
 				String nyRiktning = scanner.next();
-				if (!((senasteriktning.equals("up")||senasteriktning.equals("down"))&&(nyRiktning.equals("up")||nyRiktning.equals("down"))||
-						(senasteriktning.equals("left")||senasteriktning.equals("right"))&&(nyRiktning.equals("left")||nyRiktning.equals("right")))) {
-					setRiktning(nyRiktning);
+				String nyRiktning2;
+				if (scanner.hasNext()) {
+					nyRiktning2 = scanner.next();
 				}
+				else {
+					nyRiktning2 = "null";
+				}
+				if (!setRiktning(nyRiktning)) {
+					setRiktning(nyRiktning2);
+				}
+
 
 
 			}
@@ -128,9 +135,15 @@ public class SnakeServer {
 		sendAll("A GAMEOVER "+orsak+" "+namn);
 		reset();
 	}
-	private void setRiktning(String nyRiktning) {
-		riktning=nyRiktning;
-		send("R "+nyRiktning);
+	private boolean setRiktning(String nyRiktning) {
+		if (!((senasteriktning.equals("up")||senasteriktning.equals("down"))&&(nyRiktning.equals("up")||nyRiktning.equals("down"))||
+				(senasteriktning.equals("left")||senasteriktning.equals("right"))&&(nyRiktning.equals("left")||nyRiktning.equals("right")))) {
+			riktning=nyRiktning;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
