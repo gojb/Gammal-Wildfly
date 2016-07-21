@@ -140,7 +140,7 @@ public class SnakeServer {
 						long i = System.currentTimeMillis();
 						update();
 						try {
-							sleep(i+150-System.currentTimeMillis());
+							sleep(i+1-System.currentTimeMillis());
 							
 						} 
 						catch (IllegalArgumentException e) {
