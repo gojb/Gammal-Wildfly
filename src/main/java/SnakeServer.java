@@ -17,8 +17,26 @@ public class SnakeServer {
 	public static boolean pause;
 	public static int pluppX,pluppY;
 	static{
-		timer.start();
+//		timer.start();
 		plupp();
+		new Thread(){
+			@Override
+			public void run() {
+				long i = System.currentTimeMillis();
+				update();
+				try {
+					sleep(i+100-System.currentTimeMillis());
+				} 
+				catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}.start();
 	}
 
 	private Session session;
