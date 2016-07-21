@@ -192,6 +192,7 @@ public class SnakeServer {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		Date date2 = new Date(),date3 = null,date4= null,date5 = null,date6;
 		try{
 			if (!pause) {
 				//Gör alla förflyttningar
@@ -216,7 +217,7 @@ public class SnakeServer {
 					snake.senasteriktning=snake.riktning;
 				}
 				//Förlustkontroll
-
+				date3 = new Date();
 				gameoverloop:for (SnakeServer snake : snakes) {
 					//Kolla om munnen åker ur bild
 					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
@@ -244,6 +245,7 @@ public class SnakeServer {
 						}
 					}
 				}
+				date4 = new Date();
 				//Poängkontroll
 				for (SnakeServer snake : snakes) {
 					if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
@@ -251,6 +253,7 @@ public class SnakeServer {
 						plupp();
 					}
 				}
+				date5 = new Date();
 				datasend();
 			}
 		}
@@ -258,9 +261,15 @@ public class SnakeServer {
 			sendAll("SERVERUPDATEEXEPTION");
 			sendAll(e.toString());
 		}
-		long diff=new	Date().getTime()-date.getTime();
-		if (diff>1) {
-			sendAll("Tid "+diff);
+		date6 = new Date();
+		long diff=date6.getTime()-date.getTime();
+		if (diff>5) {
+			sendAll("Tid Total"+diff+
+					" Rem"+(date2.getTime()-date.getTime())+
+					" Move"+(date3.getTime()-date2.getTime())+
+					" Förl"+(date4.getTime()-date3.getTime())+
+					" Poäng"+(date5.getTime()-date4.getTime())+
+					" Send"+(date6.getTime()-date5.getTime()));
 		}
 	}
 	
