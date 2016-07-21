@@ -20,7 +20,6 @@ public class SnakeServer {
 		public void run() {
 			while (true) {
 				try {
-
 					long i = System.currentTimeMillis();
 					if (!pause) {
 						update();
