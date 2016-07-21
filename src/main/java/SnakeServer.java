@@ -56,10 +56,7 @@ public class SnakeServer {
 					setRiktning(nyRiktning2);
 				}
 
-
-
 			}
-
 			else if (string.equals("INIT")) {
 				färg = Color.decode("#"+scanner.next());
 				scanner.useDelimiter("\\z"); 
