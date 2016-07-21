@@ -44,16 +44,10 @@ public class SnakeServer {
 			scanner = new Scanner(message);
 			String string=scanner.next();
 			if (string.equals("R")) {
-				String nyRiktning = scanner.next();
-				String nyRiktning2;
-				if (scanner.hasNext()) {
-					nyRiktning2 = scanner.next();
-				}
-				else {
-					nyRiktning2 = nyRiktning;
-				}
-				if (!setRiktning(nyRiktning)) {
-					setRiktning(nyRiktning2);
+				if (!setRiktning(scanner.next())) {
+					if (scanner.hasNext()) {
+						setRiktning(scanner.next());
+					}
 				}
 
 			}
