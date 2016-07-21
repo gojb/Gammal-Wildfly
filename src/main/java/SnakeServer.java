@@ -19,33 +19,7 @@ public class SnakeServer {
 	static{
 		//		timer.start();
 		plupp();
-		new Thread(){
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						long i = System.currentTimeMillis();
-						update();
-						sendAll("UPDATE");
-						try {
-							sleep(i+100-System.currentTimeMillis());
-						} 
-						catch (IllegalArgumentException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							sendAll(e.toString());
-						}catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							sendAll(e.toString());
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-		}.start();
+		gameloop();
 	}
 
 	private Session session;
@@ -56,7 +30,6 @@ public class SnakeServer {
 	private String namn;
 	private int highscore;
 	private int fördröjning;
-
 
 	@OnOpen
 	public void open(Session session){
@@ -119,6 +92,7 @@ public class SnakeServer {
 	public void close(){
 		removeList.add(this);
 	}
+	
 	public void send(String string) {
 		try {
 			session.getBasicRemote().sendText(string);
@@ -164,6 +138,36 @@ public class SnakeServer {
 		else {
 			return false;
 		}
+	}
+	public static void gameloop(){
+		new Thread(){
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						long i = System.currentTimeMillis();
+						update();
+						try {
+							sleep(i+100-System.currentTimeMillis());
+							
+						} 
+						catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							sendAll("E "+e.toString());
+						}catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							sendAll("E "+e.toString());
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						sendAll("E "+e.toString());
+					}
+				}
+			}
+	
+		}.start();
 	}
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
@@ -286,7 +290,7 @@ public class SnakeServer {
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
-			sendAll(e.toString());
+			sendAll("E "+e.toString());
 		}
 		date6 = new Date();
 		long diff=date6.getTime()-date.getTime();
