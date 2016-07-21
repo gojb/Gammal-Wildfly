@@ -324,7 +324,7 @@ public class SnakeServer {
 		date6 = System.currentTimeMillis();
 		long diff=date6-date;
 		if (diff>4) {
-			sendAll("E Total"+diff+
+			sendAllList.add("E Total"+diff+
 					" Rem"+(date2-date)+
 					" Move"+(date3-date2)+
 					" Förl"+(date4-date3)+
