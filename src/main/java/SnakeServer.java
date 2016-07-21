@@ -95,6 +95,7 @@ public class SnakeServer {
 		} catch (Exception e) {
 			send(e.toString());
 		}
+		
 	}
 	@OnClose 
 	public void close(){
