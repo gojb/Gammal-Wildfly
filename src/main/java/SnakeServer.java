@@ -349,10 +349,12 @@ public class SnakeServer {
 			}
 			data+=snake.färg+string;
 		}
-		sendAllList.add(data);
+		
 		if (highscoreBool) {
 			highscore();
+			
 		}
+		sendAllList.add(data);
 		sendAll();
 	}
 }
