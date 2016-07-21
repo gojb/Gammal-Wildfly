@@ -2,7 +2,6 @@ import java.awt.Color;
 
 import java.util.*;
 
-import javax.swing.Timer;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
@@ -141,7 +140,7 @@ public class SnakeServer {
 						long i = System.currentTimeMillis();
 						update();
 						try {
-							sleep(i+1000-System.currentTimeMillis());
+							sleep(i+150-System.currentTimeMillis());
 							
 						} 
 						catch (IllegalArgumentException e) {
