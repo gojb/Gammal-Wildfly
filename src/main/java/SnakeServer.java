@@ -124,6 +124,10 @@ public class SnakeServer {
 		fördröjning=10;
 
 	}
+	void gameover(String orsak){
+		sendAll("A GAMEOVER "+orsak+" "+namn);
+		reset();
+	}
 	private void setRiktning(String nyRiktning) {
 		riktning=nyRiktning;
 		send("R "+nyRiktning);
@@ -169,10 +173,6 @@ public class SnakeServer {
 		sendAll( "H DONE ");
 
 	}
-	static void gameover(SnakeServer snake,String s){
-		sendAll("A GAMEOVER "+snake.namn +"("+s+")");
-		snake.reset();
-	}
 	public static void update() {
 		try {
 			if (removeList.size()>0) {
@@ -213,14 +213,14 @@ public class SnakeServer {
 				gameoverloop:for (SnakeServer snake : snakes) {
 					//Kolla om munnen åker ur bild
 					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
-						gameover(snake,"urBild");
+						snake.gameover("urBild");
 						break gameoverloop;
 					}
 
 					//Kolla om munnen nuddar egna kroppen
 					for (int i = 1; i < snake.length; i++) {
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
-							gameover(snake,"nuddaKropp");
+							snake.gameover("nuddaKropp");
 							break gameoverloop;
 						}
 					}
@@ -230,7 +230,7 @@ public class SnakeServer {
 						if (snake2!=snake) {
 							for (int i = 0; i < snake2.length; i++) {
 								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
-									gameover(snake,"nuddaAnnan");
+									snake.gameover("nuddaAnnan");
 									break gameoverloop;
 								}
 							} 
