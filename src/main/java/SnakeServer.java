@@ -38,7 +38,7 @@ public class SnakeServer {
 				}
 			}
 		}
-	
+
 	};
 	static{
 		//		timer.start();
@@ -159,7 +159,7 @@ public class SnakeServer {
 		}
 	}
 
-		public static void resetAll(){
+	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
 			snakeServer.fördröjning=-1;
@@ -179,8 +179,8 @@ public class SnakeServer {
 		highscore();
 	}
 	static void highscore(){
-		
-		
+
+
 		ArrayList<SnakeServer> snakes=new ArrayList<>(SnakeServer.snakes);
 		snakes.sort(new Comparator<SnakeServer>() {
 			@Override
@@ -205,13 +205,13 @@ public class SnakeServer {
 			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
 		}
 		sendAll(data);
-//		for (SnakeServer snake : snakes) {
-//			if (snake.length-3>snake.highscore) {
-//				snake.highscore=snake.length-3;
-//			}
-//			sendAll( "H SET "+(snake.length-3)+ " "+Integer.toHexString(snake.färg.getRGB()).substring(2) +" "+snake.highscore+" "+snake.namn );
-//		}
-//		sendAll( "H DONE ");
+		//		for (SnakeServer snake : snakes) {
+		//			if (snake.length-3>snake.highscore) {
+		//				snake.highscore=snake.length-3;
+		//			}
+		//			sendAll( "H SET "+(snake.length-3)+ " "+Integer.toHexString(snake.färg.getRGB()).substring(2) +" "+snake.highscore+" "+snake.namn );
+		//		}
+		//		sendAll( "H DONE ");
 
 	}
 	public static void update() {
@@ -253,30 +253,39 @@ public class SnakeServer {
 				}
 				//Förlustkontroll
 				date3 = new Date();
-				gameoverloop:for (SnakeServer snake : snakes) {
-					//Kolla om munnen åker ur bild
-					if ((snake.x[0]<0||snake.y[0]<0)||snake.x[0]>=width||snake.y[0]>=height) {
-						snake.gameover("urBild");
-						break gameoverloop;
-					}
-
-					//Kolla om munnen nuddar egna kroppen
-					for (int i = 1; i < snake.length; i++) {
-						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
-							snake.gameover("nuddaKropp");
+				for (SnakeServer snake : snakes) {
+					gameoverloop:if(snake.fördröjning<1){
+						//Kolla om munnen åker ur bild
+						if (snake.x[0]<0||snake.y[0]<0||snake.x[0]>=width||snake.y[0]>=height) {
+							snake.gameover("urBild");
 							break gameoverloop;
 						}
-					}
 
-					//Kolla om munnen nuddar annans kropp eller mun
-					for (SnakeServer snake2 : snakes) {
-						if (snake2!=snake) {
-							for (int i = 0; i < snake2.length; i++) {
-								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
-									snake.gameover("nuddaAnnan");
+						//Kolla om munnen nuddar egna kroppen
+						for (int i = 1; i < snake.length; i++) {
+							if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
+								snake.gameover("nuddaKropp");
+								break gameoverloop;
+							}
+						}
+
+						//Kolla om munnen nuddar annans kropp eller mun
+						for (SnakeServer snake2 : snakes) {
+							if (snake2!=snake) {
+								if (snake.x[0]==snake2.x[0]&&snake.y[0]==snake2.y[0]) {
+									if (snake2.fördröjning<1) {
+										snake.gameover("nuddaAnnanMun");
+									}
+									snake2.gameover("nuddaAnnanMun");
 									break gameoverloop;
 								}
-							} 
+								for (int i = 1; i < snake2.length; i++) {
+									if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
+										snake.gameover("nuddaAnnanKropp");
+										break gameoverloop;
+									}
+								} 
+							}
 						}
 					}
 				}
