@@ -13,6 +13,7 @@ public class SnakeServer {
 	public static final int width = 50;
 	public static boolean pause;
 	public static int pluppX,pluppY;
+	public static ArrayList<String> sendAllList=new ArrayList<>();
 	public static Thread gameloop=new Thread(){
 		@Override
 		public void run() {
@@ -153,7 +154,7 @@ public class SnakeServer {
 
 	}
 	void gameover(String orsak){
-		sendAll("A GAMEOVER "+orsak+" "+namn);
+		sendAllList.add("A GAMEOVER "+orsak+" "+namn);
 		reset();
 	}
 	private boolean setRiktning(String nyRiktning) {
@@ -179,6 +180,14 @@ public class SnakeServer {
 		for (SnakeServer snake : snakes) {
 			snake.send(message);
 		}
+	}
+	public static void sendAll(){
+		for (SnakeServer snake : snakes) {
+			for (String string : sendAllList) {
+				snake.send(string);
+			}
+		}
+		sendAllList.clear();
 	}
 	static void plupp(){
 		pluppX = random.nextInt(width);
@@ -212,7 +221,7 @@ public class SnakeServer {
 			}
 			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
 		}
-		sendAll(data);
+		sendAllList.add(data);
 		//		for (SnakeServer snake : snakes) {
 		//			if (snake.length-3>snake.highscore) {
 		//				snake.highscore=snake.length-3;
@@ -347,6 +356,7 @@ public class SnakeServer {
 			}
 			data+=snake.färg+string;
 		}
-		sendAll(data);
+		sendAllList.add(data);
+		sendAll();
 	}
 }
