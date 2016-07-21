@@ -50,7 +50,7 @@ public class SnakeServer {
 					nyRiktning2 = scanner.next();
 				}
 				else {
-					nyRiktning2 = "null";
+					nyRiktning2 = nyRiktning;
 				}
 				if (!setRiktning(nyRiktning)) {
 					setRiktning(nyRiktning2);
