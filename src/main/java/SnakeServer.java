@@ -263,6 +263,7 @@ public class SnakeServer {
 			sendAll("Tid "+diff);
 		}
 	}
+	
 	private static void datasend() {
 		//Skicka data till spelarna
 		String data="B ";
