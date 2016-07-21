@@ -192,17 +192,17 @@ public class SnakeServer {
 		});
 		Collections.reverse(snakes);
 		String data="H ";
-//		for (int j = 0; j < snakes.size(); j++) {
-//			if (j>0) {
-//				data+=";";
-//			}
-//			SnakeServer snake = snakes.get(j);
-//			int poäng=snake.length-3;
-//			if (poäng>snake.highscore) {
-//				snake.highscore=poäng;
-//			}
-//			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
-//		}
+		for (int j = 0; j < snakes.size(); j++) {
+			if (j>0) {
+				data+=";";
+			}
+			SnakeServer snake = snakes.get(j);
+			int poäng=snake.length-3;
+			if (poäng>snake.highscore) {
+				snake.highscore=poäng;
+			}
+			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
+		}
 		sendAll(data);
 //		for (SnakeServer snake : snakes) {
 //			if (snake.length-3>snake.highscore) {
