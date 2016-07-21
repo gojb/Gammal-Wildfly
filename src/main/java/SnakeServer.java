@@ -219,6 +219,7 @@ public class SnakeServer {
 			}
 			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
 		}
+		highscoreBool=false;
 		sendAllList.add(data);
 	}
 	public static void update() {
