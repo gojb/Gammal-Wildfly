@@ -18,19 +18,21 @@ public class SnakeServer {
 		public void run() {
 			while (true) {
 				try {
-					long i = System.currentTimeMillis();
-					update();
-					try {
-						sleep(i+100-System.currentTimeMillis());
-					} 
-					catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						sendAll("E "+e.toString());
-					}catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						sendAll("E "+e.toString());
+					if (!pause) {
+						long i = System.currentTimeMillis();
+						update();
+						try {
+							sleep(i+100-System.currentTimeMillis());
+						} 
+						catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							sendAll("E "+e.toString());
+						}catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							sendAll("E "+e.toString());
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -96,7 +98,7 @@ public class SnakeServer {
 				else {
 					resetAll();
 				}
-				
+
 			}
 			else if(string.equals("PAUSE")){
 				pause=!pause;
@@ -235,77 +237,77 @@ public class SnakeServer {
 		}
 		long date2 = System.currentTimeMillis(),date3 = 0,date4=0,date5=0,date6=0; 
 		try{
-			if (!pause) {
-				//Gör alla förflyttningar
-				for (SnakeServer snake : snakes) {
-					if (snake.fördröjning<0) {
-						for (int i = snake.length-1 ; i > 0; i--) {
-							snake.x[i]=snake.x[i-1];
-							snake.y[i]=snake.y[i-1];
-						}
-						if (snake.riktning.equals("down")) 
-							snake.y[0]+=1;
-						else if (snake.riktning.equals("up"))
-							snake.y[0]-=1;
-						else if (snake.riktning.equals("right"))
-							snake.x[0]+=1;
-						else if (snake.riktning.equals("left"))
-							snake.x[0]-=1;
+
+			//Gör alla förflyttningar
+			for (SnakeServer snake : snakes) {
+				if (snake.fördröjning<0) {
+					for (int i = snake.length-1 ; i > 0; i--) {
+						snake.x[i]=snake.x[i-1];
+						snake.y[i]=snake.y[i-1];
 					}
-					else{ 
-						snake.fördröjning--; 
-					}
-					snake.senasteriktning=snake.riktning;
+					if (snake.riktning.equals("down")) 
+						snake.y[0]+=1;
+					else if (snake.riktning.equals("up"))
+						snake.y[0]-=1;
+					else if (snake.riktning.equals("right"))
+						snake.x[0]+=1;
+					else if (snake.riktning.equals("left"))
+						snake.x[0]-=1;
 				}
-				//Förlustkontroll
-				date3 = System.currentTimeMillis();
-				for (SnakeServer snake : snakes) {
-					gameoverloop:if(snake.fördröjning<0){
-						//Kolla om munnen åker ur bild
-						if (snake.x[0]<0||snake.y[0]<0||snake.x[0]>=width||snake.y[0]>=height) {
-							snake.gameover("urBild");
+				else{ 
+					snake.fördröjning--; 
+				}
+				snake.senasteriktning=snake.riktning;
+			}
+			//Förlustkontroll
+			date3 = System.currentTimeMillis();
+			for (SnakeServer snake : snakes) {
+				gameoverloop:if(snake.fördröjning<0){
+					//Kolla om munnen åker ur bild
+					if (snake.x[0]<0||snake.y[0]<0||snake.x[0]>=width||snake.y[0]>=height) {
+						snake.gameover("urBild");
+						break gameoverloop;
+					}
+
+					//Kolla om munnen nuddar egna kroppen
+					for (int i = 1; i < snake.length; i++) {
+						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
+							snake.gameover("nuddaKropp");
 							break gameoverloop;
 						}
+					}
 
-						//Kolla om munnen nuddar egna kroppen
-						for (int i = 1; i < snake.length; i++) {
-							if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
-								snake.gameover("nuddaKropp");
+					//Kolla om munnen nuddar annans kropp eller mun
+					for (SnakeServer snake2 : snakes) {
+						if (snake2!=snake) {
+							if (snake.x[0]==snake2.x[0]&&snake.y[0]==snake2.y[0]) {
+								if (snake2.fördröjning<0) {
+									snake.gameover("nuddaAnnanMun");
+								}
+								snake2.gameover("nuddaAnnanMun");
 								break gameoverloop;
 							}
-						}
-
-						//Kolla om munnen nuddar annans kropp eller mun
-						for (SnakeServer snake2 : snakes) {
-							if (snake2!=snake) {
-								if (snake.x[0]==snake2.x[0]&&snake.y[0]==snake2.y[0]) {
-									if (snake2.fördröjning<0) {
-										snake.gameover("nuddaAnnanMun");
-									}
-									snake2.gameover("nuddaAnnanMun");
+							for (int i = 1; i < snake2.length; i++) {
+								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
+									snake.gameover("nuddaAnnanKropp");
 									break gameoverloop;
 								}
-								for (int i = 1; i < snake2.length; i++) {
-									if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
-										snake.gameover("nuddaAnnanKropp");
-										break gameoverloop;
-									}
-								} 
-							}
+							} 
 						}
 					}
 				}
-				date4 = System.currentTimeMillis();
-				//Poängkontroll
-				for (SnakeServer snake : snakes) {
-					if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
-						snake.length++;
-						plupp();
-					}
-				}
-				date5 = System.currentTimeMillis();
-				datasend();
 			}
+			date4 = System.currentTimeMillis();
+			//Poängkontroll
+			for (SnakeServer snake : snakes) {
+				if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
+					snake.length++;
+					plupp();
+				}
+			}
+			date5 = System.currentTimeMillis();
+			datasend();
+
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
