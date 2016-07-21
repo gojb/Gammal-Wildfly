@@ -17,33 +17,34 @@ public class SnakeServer {
 	public static boolean pause;
 	public static int pluppX,pluppY;
 	static{
-//		timer.start();
+		//		timer.start();
 		plupp();
 		new Thread(){
 			@Override
 			public void run() {
-				try {
-					long i = System.currentTimeMillis();
-					update();
-					sendAll("UPDATE");
+				while (true) {
 					try {
-						sleep(i+100-System.currentTimeMillis());
-					} 
-					catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
+						long i = System.currentTimeMillis();
+						update();
+						sendAll("UPDATE");
+						try {
+							sleep(i+100-System.currentTimeMillis());
+						} 
+						catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							sendAll(e.toString());
+						}catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							sendAll(e.toString());
+						}
+					} catch (Exception e) {
 						e.printStackTrace();
-						sendAll(e.toString());
-					}catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						sendAll(e.toString());
 					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
-			
+
 		}.start();
 	}
 
@@ -112,7 +113,7 @@ public class SnakeServer {
 		} catch (Exception e) {
 			send(e.toString());
 		}
-		
+
 	}
 	@OnClose 
 	public void close(){
@@ -140,7 +141,7 @@ public class SnakeServer {
 		}
 		else{		
 			String [] arr = {"up", "down", "right", "left"};
-//			setRiktning(arr[random.nextInt(arr.length)]);
+			//			setRiktning(arr[random.nextInt(arr.length)]);
 			riktning=arr[random.nextInt(arr.length)];
 			length = 3;
 			x[0]=posx;
@@ -298,7 +299,7 @@ public class SnakeServer {
 					" Send"+(date6.getTime()-date5.getTime()));
 		}
 	}
-	
+
 	private static void datasend() {
 		//Skicka data till spelarna
 		String data="B ";
