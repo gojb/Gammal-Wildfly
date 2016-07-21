@@ -14,6 +14,7 @@ public class SnakeServer {
 	public static boolean pause;
 	public static int pluppX,pluppY;
 	public static ArrayList<String> sendAllList=new ArrayList<>();
+	public static boolean highscoreBool;
 	public static Thread gameloop=new Thread(){
 		@Override
 		public void run() {
@@ -26,11 +27,9 @@ public class SnakeServer {
 							sleep(i+100-System.currentTimeMillis());
 						} 
 						catch (IllegalArgumentException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 							sendAll("E "+e.toString());
 						}catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 							sendAll("E "+e.toString());
 						}
@@ -149,7 +148,7 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-		highscore();
+		highscoreBool=true;
 		fördröjning=10;
 
 	}
@@ -193,7 +192,7 @@ public class SnakeServer {
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
 		sendAll("P " + pluppX + " " + pluppY);
-		highscore();
+		highscoreBool=true;
 	}
 	static void highscore(){
 
@@ -202,7 +201,6 @@ public class SnakeServer {
 		snakes.sort(new Comparator<SnakeServer>() {
 			@Override
 			public int compare(SnakeServer o1, SnakeServer o2) {
-				// TODO Auto-generated method stub
 				int one = (o1.length-o2.length);
 
 				return one == 0 ? (o1.highscore-o2.highscore) : one;
@@ -222,14 +220,6 @@ public class SnakeServer {
 			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
 		}
 		sendAllList.add(data);
-		//		for (SnakeServer snake : snakes) {
-		//			if (snake.length-3>snake.highscore) {
-		//				snake.highscore=snake.length-3;
-		//			}
-		//			sendAll( "H SET "+(snake.length-3)+ " "+Integer.toHexString(snake.färg.getRGB()).substring(2) +" "+snake.highscore+" "+snake.namn );
-		//		}
-		//		sendAll( "H DONE ");
-
 	}
 	public static void update() {
 		long date = System.currentTimeMillis();
@@ -357,6 +347,9 @@ public class SnakeServer {
 			data+=snake.färg+string;
 		}
 		sendAllList.add(data);
+		if (highscoreBool) {
+			highscore();
+		}
 		sendAll();
 	}
 }
