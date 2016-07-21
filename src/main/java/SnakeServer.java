@@ -141,7 +141,6 @@ public class SnakeServer {
 						update();
 						try {
 							sleep(i+100-System.currentTimeMillis());
-							
 						} 
 						catch (IllegalArgumentException e) {
 							// TODO Auto-generated catch block
