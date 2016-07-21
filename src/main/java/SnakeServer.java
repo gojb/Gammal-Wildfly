@@ -245,8 +245,8 @@ public class SnakeServer {
 						else if (snake.riktning.equals("left"))
 							snake.x[0]-=1;
 					}
-					else if (snake.fördröjning--==0) {
-						sendAll("A RESTART");
+					else{ 
+						snake.fördröjning--; 
 					}
 					snake.senasteriktning=snake.riktning;
 				}
