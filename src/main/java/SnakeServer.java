@@ -282,17 +282,23 @@ public class SnakeServer {
 						if (snake2!=snake) {
 							if (snake.x[0]==snake2.x[0]&&snake.y[0]==snake2.y[0]) {
 								if (snake2.fördröjning<0) {
-									snake.gameover("nuddaAnnanMun");
+									snake.gameover("krock");
 								}
-								snake2.gameover("nuddaAnnanMun");
-								break gameoverloop;
+								snake2.gameover("krock");
 							}
-							for (int i = 1; i < snake2.length; i++) {
-								if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
-									snake.gameover("nuddaAnnanKropp");
-									break gameoverloop;
-								}
-							} 
+							else if (snake.x[0]==snake2.x[1]&&snake.y[0]==snake2.y[1]&&
+									snake.x[1]==snake2.x[0]&&snake.y[1]==snake2.y[0]) {
+								snake.gameover("krock");
+								snake2.gameover("krock");
+							}
+							else{
+								for (int i = 1; i < snake2.length; i++) {
+									if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
+										snake.gameover("nuddaAnnanKropp");
+										break gameoverloop;
+									}
+								} 
+							}
 						}
 					}
 				}
