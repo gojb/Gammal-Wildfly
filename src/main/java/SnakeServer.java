@@ -24,15 +24,18 @@ public class SnakeServer {
 			public void run() {
 				long i = System.currentTimeMillis();
 				update();
+				sendAll("UPDATE");
 				try {
 					sleep(i+100-System.currentTimeMillis());
 				} 
 				catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					sendAll(e.toString());
 				}catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					sendAll(e.toString());
 				}
 			}
 			
