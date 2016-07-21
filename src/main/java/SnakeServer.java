@@ -90,7 +90,13 @@ public class SnakeServer {
 				}
 			}
 			else if (string.equals("RES")) {
-				resetAll();
+				if (pause) {
+					update();
+				}
+				else {
+					resetAll();
+				}
+				
 			}
 			else if(string.equals("PAUSE")){
 				pause=!pause;
@@ -215,7 +221,7 @@ public class SnakeServer {
 
 	}
 	public static void update() {
-		Date date = new Date();
+		long date = System.currentTimeMillis();
 		try {
 			if (removeList.size()>0) {
 				for (SnakeServer snakeServer : removeList) {
@@ -227,7 +233,7 @@ public class SnakeServer {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		Date date2 = new Date(),date3 = null,date4= null,date5 = null,date6;
+		long date2 = System.currentTimeMillis(),date3 = 0,date4=0,date5=0,date6=0; 
 		try{
 			if (!pause) {
 				//Gör alla förflyttningar
@@ -252,7 +258,7 @@ public class SnakeServer {
 					snake.senasteriktning=snake.riktning;
 				}
 				//Förlustkontroll
-				date3 = new Date();
+				date3 = System.currentTimeMillis();
 				for (SnakeServer snake : snakes) {
 					gameoverloop:if(snake.fördröjning<0){
 						//Kolla om munnen åker ur bild
@@ -289,7 +295,7 @@ public class SnakeServer {
 						}
 					}
 				}
-				date4 = new Date();
+				date4 = System.currentTimeMillis();
 				//Poängkontroll
 				for (SnakeServer snake : snakes) {
 					if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
@@ -297,7 +303,7 @@ public class SnakeServer {
 						plupp();
 					}
 				}
-				date5 = new Date();
+				date5 = System.currentTimeMillis();
 				datasend();
 			}
 		}
@@ -305,15 +311,15 @@ public class SnakeServer {
 			sendAll("SERVERUPDATEEXEPTION");
 			sendAll("E "+e.toString());
 		}
-		date6 = new Date();
-		long diff=date6.getTime()-date.getTime();
+		date6 = System.currentTimeMillis();
+		long diff=date6-date;
 		if (diff>4) {
 			sendAll("E Total"+diff+
-					" Rem"+(date2.getTime()-date.getTime())+
-					" Move"+(date3.getTime()-date2.getTime())+
-					" Förl"+(date4.getTime()-date3.getTime())+
-					" Poäng"+(date5.getTime()-date4.getTime())+
-					" Send"+(date6.getTime()-date5.getTime()));
+					" Rem"+(date2-date)+
+					" Move"+(date3-date2)+
+					" Förl"+(date4-date3)+
+					" Poäng"+(date5-date4)+
+					" Send"+(date6-date5));
 		}
 	}
 
