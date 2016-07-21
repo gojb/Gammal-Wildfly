@@ -24,7 +24,7 @@ public class SnakeServer {
 	private int[] x=new int[1000],y=new int[1000];
 	private int length;
 	private String riktning,senasteriktning;
-	private Color färg;
+	private String färg;
 	private String namn;
 	private int highscore;
 	private int fördröjning;
@@ -50,7 +50,7 @@ public class SnakeServer {
 
 			}
 			else if (string.equals("INIT")) {
-				färg = Color.decode("#"+scanner.next());
+				färg = scanner.next();
 				scanner.useDelimiter("\\z"); 
 				namn = scanner.next().substring(1);
 				snakes.add(this);
@@ -84,7 +84,7 @@ public class SnakeServer {
 	public void close(){
 		removeList.add(this);
 	}
-	
+
 	public void send(String string) {
 		try {
 			session.getBasicRemote().sendText(string);
@@ -157,7 +157,7 @@ public class SnakeServer {
 					}
 				}
 			}
-	
+
 		}.start();
 	}
 	public static void resetAll(){
@@ -180,7 +180,6 @@ public class SnakeServer {
 	}
 	static void highscore(){
 		sendAll("P " + pluppX + " " + pluppY);
-		sendAll( "H RESET");
 		ArrayList<SnakeServer> snakes=new ArrayList<>(SnakeServer.snakes);
 		snakes.sort(new Comparator<SnakeServer>() {
 			@Override
@@ -192,13 +191,26 @@ public class SnakeServer {
 			}
 		});
 		Collections.reverse(snakes);
-		for (SnakeServer snake : snakes) {
-			if (snake.length-3>snake.highscore) {
-				snake.highscore=snake.length-3;
+		String data="H ";
+		for (int j = 0; j < snakes.size(); j++) {
+			if (j>0) {
+				data+=";";
 			}
-			sendAll( "H SET "+(snake.length-3)+ " "+Integer.toHexString(snake.färg.getRGB()).substring(2) +" "+snake.highscore+" "+snake.namn );
+			SnakeServer snake = snakes.get(j);
+			int poäng=snake.length-3;
+			if (poäng>snake.highscore) {
+				snake.highscore=poäng;
+			}
+			data+=poäng+" "+snake.färg+" "+snake.highscore+" "+snake.namn;
 		}
-		sendAll( "H DONE ");
+		sendAll(data);
+//		for (SnakeServer snake : snakes) {
+//			if (snake.length-3>snake.highscore) {
+//				snake.highscore=snake.length-3;
+//			}
+//			sendAll( "H SET "+(snake.length-3)+ " "+Integer.toHexString(snake.färg.getRGB()).substring(2) +" "+snake.highscore+" "+snake.namn );
+//		}
+//		sendAll( "H DONE ");
 
 	}
 	public static void update() {
@@ -309,7 +321,7 @@ public class SnakeServer {
 				int y = snake.y[i];
 				string+=" "+x+" "+y;
 			}
-			data+=(Integer.toHexString(snake.färg.getRGB()).substring(2)+string);
+			data+=snake.färg+string;
 		}
 		sendAll(data);
 	}
