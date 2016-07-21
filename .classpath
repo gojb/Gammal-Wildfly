@@ -6,6 +6,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/zjakbjo/Downloads/jboss-websocket-api_1.0_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="/GoJbsBraOchHa/jboss-websocket-api_1.0_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
