@@ -180,6 +180,7 @@ public class SnakeServer {
 
 	}
 	public static void update() {
+		Date date = new Date();
 		try {
 			if (removeList.size()>0) {
 				for (SnakeServer snakeServer : removeList) {
@@ -257,6 +258,7 @@ public class SnakeServer {
 			sendAll("SERVERUPDATEEXEPTION");
 			sendAll(e.toString());
 		}
+		sendAll("Tid"+(new	Date().getTime()-date.getTime()));
 	}
 	private static void datasend() {
 		//Skicka data till spelarna
