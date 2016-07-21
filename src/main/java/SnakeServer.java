@@ -295,7 +295,7 @@ public class SnakeServer {
 		date6 = new Date();
 		long diff=date6.getTime()-date.getTime();
 		if (diff>30) {
-			sendAll("Tid Total"+diff+
+			sendAll("E Total"+diff+
 					" Rem"+(date2.getTime()-date.getTime())+
 					" Move"+(date3.getTime()-date2.getTime())+
 					" Förl"+(date4.getTime()-date3.getTime())+
