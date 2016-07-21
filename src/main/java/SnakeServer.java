@@ -254,7 +254,7 @@ public class SnakeServer {
 				//Förlustkontroll
 				date3 = new Date();
 				for (SnakeServer snake : snakes) {
-					gameoverloop:if(snake.fördröjning<1){
+					gameoverloop:if(snake.fördröjning<0){
 						//Kolla om munnen åker ur bild
 						if (snake.x[0]<0||snake.y[0]<0||snake.x[0]>=width||snake.y[0]>=height) {
 							snake.gameover("urBild");
@@ -273,7 +273,7 @@ public class SnakeServer {
 						for (SnakeServer snake2 : snakes) {
 							if (snake2!=snake) {
 								if (snake.x[0]==snake2.x[0]&&snake.y[0]==snake2.y[0]) {
-									if (snake2.fördröjning<1) {
+									if (snake2.fördröjning<0) {
 										snake.gameover("nuddaAnnanMun");
 									}
 									snake2.gameover("nuddaAnnanMun");
