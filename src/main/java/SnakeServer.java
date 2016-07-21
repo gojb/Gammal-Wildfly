@@ -138,6 +138,7 @@ public class SnakeServer {
 				while (true) {
 					try {
 						long i = System.currentTimeMillis();
+						datasend();
 						update();
 						try {
 							sleep(i+100-System.currentTimeMillis());
@@ -290,7 +291,7 @@ public class SnakeServer {
 					}
 				}
 				date5 = new Date();
-				datasend();
+				
 			}
 		}
 		catch(Exception e){
