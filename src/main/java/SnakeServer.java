@@ -1,5 +1,3 @@
-import java.awt.Color;
-
 import java.util.*;
 
 import javax.websocket.*;
