@@ -54,6 +54,7 @@ public class SnakeServer {
 				namn = scanner.next().substring(1).replace(";", ":");
 				snakes.add(this);
 				reset();
+				send("P " + pluppX + " " + pluppY);
 				send("START");
 				fördröjning=-1;
 				datasend();
@@ -175,10 +176,11 @@ public class SnakeServer {
 	static void plupp(){
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
+		sendAll("P " + pluppX + " " + pluppY);
 		highscore();
 	}
 	static void highscore(){
-		sendAll("P " + pluppX + " " + pluppY);
+		
 		
 		ArrayList<SnakeServer> snakes=new ArrayList<>(SnakeServer.snakes);
 		snakes.sort(new Comparator<SnakeServer>() {
