@@ -188,7 +188,8 @@ public class SnakeServer {
 	public static void sendAll(){
 		for (SnakeServer snake : snakes) {
 			for (int i = 0; i < sendAllList.size(); i++) {
-				boolean b = i==sendAllList.size()-1;
+//				boolean b = i==sendAllList.size()-1;
+				boolean b=true;
 				snake.send(sendAllList.get(i),b);
 			}
 		}
