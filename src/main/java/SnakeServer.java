@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 import javax.websocket.*;
@@ -178,6 +179,7 @@ public class SnakeServer {
 	}
 	static void highscore(){
 		sendAll("P " + pluppX + " " + pluppY);
+		
 		ArrayList<SnakeServer> snakes=new ArrayList<>(SnakeServer.snakes);
 		snakes.sort(new Comparator<SnakeServer>() {
 			@Override
