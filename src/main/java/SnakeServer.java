@@ -258,7 +258,7 @@ public class SnakeServer {
 			sendAll("SERVERUPDATEEXEPTION");
 			sendAll(e.toString());
 		}
-		sendAll("Tid"+(new	Date().getTime()-date.getTime()));
+		sendAll("Tid "+(new	Date().getTime()-date.getTime()));
 	}
 	private static void datasend() {
 		//Skicka data till spelarna
