@@ -52,7 +52,7 @@ public class SnakeServer {
 			else if (string.equals("INIT")) {
 				färg = scanner.next();
 				scanner.useDelimiter("\\z"); 
-				namn = scanner.next().substring(1);
+				namn = scanner.next().substring(1).replace(";", ":");
 				snakes.add(this);
 				reset();
 				send("START");
@@ -201,9 +201,9 @@ public class SnakeServer {
 			if (poäng>snake.highscore) {
 				snake.highscore=poäng;
 			}
-			data+=poäng+" "+snake.färg+" "+snake.highscore+" "+snake.namn;
+			data+=poäng+" "+snake.färg+" "+snake.highscore+" "+snake.namn+";";
 		}
-		sendAll(data);
+		sendAll(data.substring(0, data.length()-1));
 //		for (SnakeServer snake : snakes) {
 //			if (snake.length-3>snake.highscore) {
 //				snake.highscore=snake.length-3;
