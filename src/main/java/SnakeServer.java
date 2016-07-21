@@ -10,7 +10,6 @@ import javax.websocket.server.ServerEndpoint;
 public class SnakeServer {
 	public static ArrayList<SnakeServer> snakes = new ArrayList<>(),
 			removeList= new ArrayList<>();
-	public static Timer timer = new Timer(100,e->update());
 	public static Random random = new Random();
 	public static final int height = 50;
 	public static final int width = 50;
@@ -63,12 +62,6 @@ public class SnakeServer {
 				if (pause) {
 					send("A PAUSE");
 				}
-			}
-			else if (string.equals("START")) {
-				timer.start();
-			}
-			else if (string.equals("STOP")) {
-				timer.stop();
 			}
 			else if (string.equals("RES")) {
 				resetAll();
