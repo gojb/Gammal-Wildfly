@@ -122,13 +122,16 @@ public class SnakeServer {
 		removeList.add(this);
 	}
 
-	public void send(String string) {
+	public void send(String string,boolean isLast) {
 		try {
-			session.getBasicRemote().sendText(string);
+			session.getBasicRemote().sendText(string,isLast);
 		} catch (Exception e) {
 			e.printStackTrace();
 			removeList.add(this);
 		}
+	}
+	public void send(String string) {
+		send(string,true);
 	}
 	public void reset(){
 		for (int i = 0; i < x.length; i++) {
@@ -184,8 +187,9 @@ public class SnakeServer {
 	}
 	public static void sendAll(){
 		for (SnakeServer snake : snakes) {
-			for (String string : sendAllList) {
-				snake.send(string);
+			for (int i = 0; i < sendAllList.size(); i++) {
+				boolean b = i==sendAllList.size()-1;
+				snake.send(sendAllList.get(i),b);
 			}
 		}
 		sendAllList.clear();
