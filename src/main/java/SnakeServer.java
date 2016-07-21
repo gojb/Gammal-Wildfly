@@ -201,9 +201,9 @@ public class SnakeServer {
 			if (poäng>snake.highscore) {
 				snake.highscore=poäng;
 			}
-			data+=poäng+" "+snake.färg+" "+snake.highscore+" "+snake.namn+";";
+			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
 		}
-		sendAll(data.substring(0, data.length()-1));
+		sendAll(data);
 //		for (SnakeServer snake : snakes) {
 //			if (snake.length-3>snake.highscore) {
 //				snake.highscore=snake.length-3;
