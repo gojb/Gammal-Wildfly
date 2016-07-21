@@ -13,10 +13,37 @@ public class SnakeServer {
 	public static final int width = 50;
 	public static boolean pause;
 	public static int pluppX,pluppY;
+	public static Thread gameloop=new Thread(){
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					long i = System.currentTimeMillis();
+					update();
+					try {
+						sleep(i+100-System.currentTimeMillis());
+					} 
+					catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						sendAll("E "+e.toString());
+					}catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						sendAll("E "+e.toString());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					sendAll("E "+e.toString());
+				}
+			}
+		}
+	
+	};
 	static{
 		//		timer.start();
 		plupp();
-		gameloop();
+		gameloop.start();;
 	}
 
 	private Session session;
@@ -131,37 +158,8 @@ public class SnakeServer {
 			return false;
 		}
 	}
-	public static void gameloop(){
-		new Thread(){
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						long i = System.currentTimeMillis();
-						datasend();
-						update();
-						try {
-							sleep(i+100-System.currentTimeMillis());
-						} 
-						catch (IllegalArgumentException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							sendAll("E "+e.toString());
-						}catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							sendAll("E "+e.toString());
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						sendAll("E "+e.toString());
-					}
-				}
-			}
 
-		}.start();
-	}
-	public static void resetAll(){
+		public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
 			snakeServer.fördröjning=-1;
@@ -291,7 +289,7 @@ public class SnakeServer {
 					}
 				}
 				date5 = new Date();
-				
+				datasend();
 			}
 		}
 		catch(Exception e){
