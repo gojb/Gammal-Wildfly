@@ -122,7 +122,8 @@ public class SnakeServer {
 		}
 		else{		
 			String [] arr = {"up", "down", "right", "left"};
-			setRiktning(arr[random.nextInt(arr.length)]);
+//			setRiktning(arr[random.nextInt(arr.length)]);
+			riktning=arr[random.nextInt(arr.length)];
 			length = 3;
 			x[0]=posx;
 			y[0]=posy;
