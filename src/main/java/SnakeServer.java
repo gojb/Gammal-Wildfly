@@ -1,6 +1,9 @@
 
 import java.util.*;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
@@ -15,6 +18,7 @@ public class SnakeServer {
 	public static int pluppX,pluppY;
 	public static ArrayList<String> sendAllList=new ArrayList<>();
 	public static boolean highscoreBool;
+	public static JsonArrayBuilder arrayBuilder;
 	public static Thread gameloop=new Thread(){
 		@Override
 		public void run() {
@@ -130,7 +134,7 @@ public class SnakeServer {
 			removeList.add(this);
 		}
 	}
-	public void send(String string) {
+	public void send(String string) {		 
 		send(string,true);
 	}
 	public void reset(){
@@ -158,7 +162,10 @@ public class SnakeServer {
 
 	}
 	void gameover(String orsak){
-		sendAllList.add("A GAMEOVER "+orsak+" "+namn);
+		arrayBuilder.add(Json.createObjectBuilder()
+				.add("type", "gameover")
+				.add("orsak", orsak)
+				.add("namn", namn));
 		reset();
 	}
 	private boolean setRiktning(String nyRiktning) {
@@ -192,13 +199,18 @@ public class SnakeServer {
 				boolean b=true;
 				snake.send(sendAllList.get(i),b);
 			}
+			snake.send(Json.createObjectBuilder().add("data",arrayBuilder).build().toString());
 		}
+		
 		sendAllList.clear();
 	}
 	static void plupp(){
 		pluppX = random.nextInt(width);
 		pluppY = random.nextInt(height);
-		sendAll("P " + pluppX + " " + pluppY);
+		arrayBuilder.add(Json.createObjectBuilder()
+				.add("type", "plupp")
+				.add("X", pluppX)
+				.add("X", pluppY));
 		highscoreBool=true;
 	}
 	static void highscore(){
@@ -214,23 +226,25 @@ public class SnakeServer {
 			}
 		});
 		Collections.reverse(snakes);
-		String data="H ";
-		for (int j = 0; j < snakes.size(); j++) {
-			if (j>0) {
-				data+=";";
-			}
-			SnakeServer snake = snakes.get(j);
+		
+		JsonArrayBuilder array=Json.createArrayBuilder();
+		for (SnakeServer snake : snakes) {
 			int poäng=snake.length-3;
 			if (poäng>snake.highscore) {
 				snake.highscore=poäng;
 			}
-			data+=poäng+" "+snake.färg+" "+snake.highscore+";"+snake.namn;
+			array.add(Json.createObjectBuilder()
+					.add("färg",snake.färg)
+					.add("namn", snake.namn)
+					.add("poäng", poäng)
+					.add("highscore", snake.highscore));
 		}
+		arrayBuilder.add(Json.createObjectBuilder().add("type", "players").add("players", array));
 		highscoreBool=false;
-		sendAllList.add(data);
 	}
 	public static void update() {
 		long date = System.currentTimeMillis();
+		arrayBuilder=Json.createArrayBuilder();
 		try {
 			if (removeList.size()>0) {
 				for (SnakeServer snakeServer : removeList) {
@@ -339,27 +353,20 @@ public class SnakeServer {
 	}
 
 	private static void datasend() {
-		//Skicka data till spelarna
-		String data="B ";
-		for (int j = 0; j < snakes.size(); j++) {
-			if (j>0) {
-				data+=";";
-			}
-			SnakeServer snake = snakes.get(j);
-			String string = "";
-			for (int i = 0; i < snake.length; i++) {
-				int x = snake.x[i];
-				int y = snake.y[i];
-				string+=" "+x+" "+y;
-			}
-			data+=snake.färg+string;
-		}
+		JsonArrayBuilder array=Json.createArrayBuilder();
 		
+		//Skicka data till spelarna
+		for (SnakeServer snake : snakes) {
+			JsonArrayBuilder pixels=Json.createArrayBuilder();
+			for (int i = 0; i < snake.length; i++) {
+				pixels.add(Json.createObjectBuilder().add("x", snake.x[i]).add("y", snake.y[i]));
+			}
+			array.add(Json.createObjectBuilder().add("Färg", snake.färg).add("pixels", pixels));
+		}
+		arrayBuilder.add(Json.createObjectBuilder().add("type", "players").add("players", array));
 		if (highscoreBool) {
 			highscore();
-			
 		}
-		sendAllList.add(data);
 		sendAll();
 	}
 }
