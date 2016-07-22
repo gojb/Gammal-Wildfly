@@ -1,8 +1,10 @@
 
+import java.awt.Stroke;
 import java.util.*;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
@@ -195,18 +197,11 @@ public class SnakeServer {
 		}
 	}
 	public static void sendAll(){
+		String message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 		for (SnakeServer snake : snakes) {
-			//			for (int i = 0; i < sendAllList.size(); i++) {
-			////				boolean b = i==sendAllList.size()-1;
-			//				boolean b=true;
-			//				snake.send(sendAllList.get(i),b);
-			//			}
-			snake.send(Json.createObjectBuilder().add("data",arrayBuilder).build().toString());
-			
+			snake.send(message);
 		}
 		arrayBuilder=Json.createArrayBuilder();
-
-		//		sendAllList.clear();
 	}
 	static void plupp(){
 		pluppX = random.nextInt(width);
