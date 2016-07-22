@@ -17,7 +17,7 @@ public class SnakeServer {
 	public static boolean pause;
 	public static int pluppX,pluppY;
 	public static boolean highscoreBool;
-	public static JsonArrayBuilder arrayBuilder;
+	public static JsonArrayBuilder arrayBuilder=Json.createArrayBuilder();;
 	public static Thread gameloop=new Thread(){
 		@Override
 		public void run() {
