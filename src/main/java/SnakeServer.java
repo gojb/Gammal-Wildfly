@@ -361,7 +361,7 @@ public class SnakeServer {
 		for (SnakeServer snake : snakes) {
 			JsonArrayBuilder pixels=Json.createArrayBuilder();
 			for (int i = 0; i < snake.length; i++) {
-				pixels.add(Json.createObjectBuilder().add("x", snake.x[i]).add("y", snake.y[i]));
+				pixels.add(Json.createObjectBuilder().add("X", snake.x[i]).add("Y", snake.y[i]));
 			}
 			array.add(Json.createObjectBuilder().add("Färg", snake.färg).add("pixels", pixels));
 		}
