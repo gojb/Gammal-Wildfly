@@ -16,7 +16,6 @@ public class SnakeServer {
 	public static final int width = 50;
 	public static boolean pause;
 	public static int pluppX,pluppY;
-	public static ArrayList<String> sendAllList=new ArrayList<>();
 	public static boolean highscoreBool;
 	public static JsonArrayBuilder arrayBuilder;
 	public static Thread gameloop=new Thread(){
@@ -194,15 +193,15 @@ public class SnakeServer {
 	}
 	public static void sendAll(){
 		for (SnakeServer snake : snakes) {
-			for (int i = 0; i < sendAllList.size(); i++) {
-//				boolean b = i==sendAllList.size()-1;
-				boolean b=true;
-				snake.send(sendAllList.get(i),b);
-			}
+//			for (int i = 0; i < sendAllList.size(); i++) {
+////				boolean b = i==sendAllList.size()-1;
+//				boolean b=true;
+//				snake.send(sendAllList.get(i),b);
+//			}
 			snake.send(Json.createObjectBuilder().add("data",arrayBuilder).build().toString());
 		}
 		
-		sendAllList.clear();
+//		sendAllList.clear();
 	}
 	static void plupp(){
 		pluppX = random.nextInt(width);
@@ -342,14 +341,14 @@ public class SnakeServer {
 		}
 		date6 = System.currentTimeMillis();
 		long diff=date6-date;
-		if (diff>4) {
-			sendAllList.add("E Total"+diff+
-					" Rem"+(date2-date)+
-					" Move"+(date3-date2)+
-					" Förl"+(date4-date3)+
-					" Poäng"+(date5-date4)+
-					" Send"+(date6-date5));
-		}
+//		if (diff>4) {
+//			sendAllList.add("E Total"+diff+
+//					" Rem"+(date2-date)+
+//					" Move"+(date3-date2)+
+//					" Förl"+(date4-date3)+
+//					" Poäng"+(date5-date4)+
+//					" Send"+(date6-date5));
+//		}
 	}
 
 	private static void datasend() {
