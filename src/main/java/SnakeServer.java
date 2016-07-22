@@ -86,7 +86,11 @@ public class SnakeServer {
 				namn = scanner.next().substring(1).replace(";", ":");
 				snakes.add(this);
 				reset();
-				send("P " + pluppX + " " + pluppY);
+				send(Json.createObjectBuilder()
+						.add("data",Json.createArrayBuilder().add(Json.createObjectBuilder()
+								.add("type", "plupp")
+								.add("X", pluppX)
+								.add("X", pluppY))).build().toString());
 				send("START");
 				fördröjning=-1;
 				datasend();
@@ -192,15 +196,16 @@ public class SnakeServer {
 	}
 	public static void sendAll(){
 		for (SnakeServer snake : snakes) {
-//			for (int i = 0; i < sendAllList.size(); i++) {
-////				boolean b = i==sendAllList.size()-1;
-//				boolean b=true;
-//				snake.send(sendAllList.get(i),b);
-//			}
+			//			for (int i = 0; i < sendAllList.size(); i++) {
+			////				boolean b = i==sendAllList.size()-1;
+			//				boolean b=true;
+			//				snake.send(sendAllList.get(i),b);
+			//			}
 			snake.send(Json.createObjectBuilder().add("data",arrayBuilder).build().toString());
+			arrayBuilder=Json.createArrayBuilder();
 		}
-		
-//		sendAllList.clear();
+
+		//		sendAllList.clear();
 	}
 	static void plupp(){
 		pluppX = random.nextInt(width);
@@ -224,7 +229,7 @@ public class SnakeServer {
 			}
 		});
 		Collections.reverse(snakes);
-		
+
 		JsonArrayBuilder array=Json.createArrayBuilder();
 		for (SnakeServer snake : snakes) {
 			int poäng=snake.length-3;
@@ -242,7 +247,6 @@ public class SnakeServer {
 	}
 	public static void update() {
 		long date = System.currentTimeMillis();
-		arrayBuilder=Json.createArrayBuilder();
 		try {
 			if (removeList.size()>0) {
 				for (SnakeServer snakeServer : removeList) {
@@ -340,19 +344,19 @@ public class SnakeServer {
 		}
 		date6 = System.currentTimeMillis();
 		long diff=date6-date;
-//		if (diff>4) {
-//			sendAllList.add("E Total"+diff+
-//					" Rem"+(date2-date)+
-//					" Move"+(date3-date2)+
-//					" Förl"+(date4-date3)+
-//					" Poäng"+(date5-date4)+
-//					" Send"+(date6-date5));
-//		}
+		//		if (diff>4) {
+		//			sendAllList.add("E Total"+diff+
+		//					" Rem"+(date2-date)+
+		//					" Move"+(date3-date2)+
+		//					" Förl"+(date4-date3)+
+		//					" Poäng"+(date5-date4)+
+		//					" Send"+(date6-date5));
+		//		}
 	}
 
 	private static void datasend() {
 		JsonArrayBuilder array=Json.createArrayBuilder();
-		
+
 		//Skicka data till spelarna
 		for (SnakeServer snake : snakes) {
 			JsonArrayBuilder pixels=Json.createArrayBuilder();
