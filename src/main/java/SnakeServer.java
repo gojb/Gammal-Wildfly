@@ -202,8 +202,9 @@ public class SnakeServer {
 			//				snake.send(sendAllList.get(i),b);
 			//			}
 			snake.send(Json.createObjectBuilder().add("data",arrayBuilder).build().toString());
-			arrayBuilder=Json.createArrayBuilder();
+			
 		}
+		arrayBuilder=Json.createArrayBuilder();
 
 		//		sendAllList.clear();
 	}
