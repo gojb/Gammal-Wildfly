@@ -340,14 +340,15 @@ public class SnakeServer {
 		}
 		date6 = System.currentTimeMillis();
 		long diff=date6-date;
-		//		if (diff>4) {
-		//			sendAllList.add("E Total"+diff+
-		//					" Rem"+(date2-date)+
-		//					" Move"+(date3-date2)+
-		//					" Förl"+(date4-date3)+
-		//					" Poäng"+(date5-date4)+
-		//					" Send"+(date6-date5));
-		//		}
+				if (diff>4) {
+					arrayBuilder.add(Json.createObjectBuilder().add("Type", "Delay")
+							.add("Delay", "Total"+diff+
+							" Rem"+(date2-date)+
+							" Move"+(date3-date2)+
+							" Förl"+(date4-date3)+
+							" Poäng"+(date5-date4)+
+							" Send"+(date6-date5)));
+				}
 	}
 
 	private static void datasend() {
