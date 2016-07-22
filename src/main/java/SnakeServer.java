@@ -1,10 +1,6 @@
-
-import java.awt.Stroke;
 import java.util.*;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
@@ -92,7 +88,7 @@ public class SnakeServer {
 						.add("data",Json.createArrayBuilder().add(Json.createObjectBuilder()
 								.add("type", "plupp")
 								.add("X", pluppX)
-								.add("X", pluppY))).build().toString());
+								.add("Y", pluppY))).build().toString());
 				send("START");
 				fördröjning=-1;
 				datasend();
@@ -209,7 +205,7 @@ public class SnakeServer {
 		arrayBuilder.add(Json.createObjectBuilder()
 				.add("type", "plupp")
 				.add("X", pluppX)
-				.add("X", pluppY));
+				.add("Y", pluppY));
 		highscoreBool=true;
 	}
 	static void highscore(){
