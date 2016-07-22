@@ -341,8 +341,8 @@ public class SnakeServer {
 		date6 = System.currentTimeMillis();
 		long diff=date6-date;
 				if (diff>4) {
-					arrayBuilder.add(Json.createObjectBuilder().add("Type", "Delay")
-							.add("Delay", "Total"+diff+
+					arrayBuilder.add(Json.createObjectBuilder().add("type", "delay")
+							.add("delay", "Total"+diff+
 							" Rem"+(date2-date)+
 							" Move"+(date3-date2)+
 							" Förl"+(date4-date3)+
@@ -360,7 +360,7 @@ public class SnakeServer {
 			for (int i = 0; i < snake.length; i++) {
 				pixels.add(Json.createObjectBuilder().add("X", snake.x[i]).add("Y", snake.y[i]));
 			}
-			array.add(Json.createObjectBuilder().add("Färg", snake.färg).add("pixels", pixels));
+			array.add(Json.createObjectBuilder().add("färg", snake.färg).add("pixels", pixels));
 		}
 		arrayBuilder.add(Json.createObjectBuilder().add("type", "players").add("players", array));
 		if (highscoreBool) {
