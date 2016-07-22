@@ -195,7 +195,11 @@ public class SnakeServer {
 	public static void sendAll(){
 		String message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 		for (SnakeServer snake : snakes) {
-			snake.send(message);
+			new Thread(){
+				public void run() {
+					snake.send(message);
+				};
+			}.start();
 		}
 		arrayBuilder=Json.createArrayBuilder();
 	}
