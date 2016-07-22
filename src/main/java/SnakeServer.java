@@ -43,6 +43,14 @@ public class SnakeServer {
 		}
 
 	};
+	static Comparator<SnakeServer> comparator = new Comparator<SnakeServer>() {
+		@Override
+		public int compare(SnakeServer o1, SnakeServer o2) {
+			int one = (o2.length-o1.length);
+
+			return one == 0 ? (o2.highscore-o1.highscore) : one;
+		}
+	};
 	static{
 		//		timer.start();
 		plupp();
@@ -209,18 +217,8 @@ public class SnakeServer {
 		highscoreBool=true;
 	}
 	static void highscore(){
-
-
 		ArrayList<SnakeServer> snakes=new ArrayList<>(SnakeServer.snakes);
-		snakes.sort(new Comparator<SnakeServer>() {
-			@Override
-			public int compare(SnakeServer o1, SnakeServer o2) {
-				int one = (o1.length-o2.length);
-
-				return one == 0 ? (o1.highscore-o2.highscore) : one;
-			}
-		});
-		Collections.reverse(snakes);
+		snakes.sort(comparator);
 
 		JsonArrayBuilder array=Json.createArrayBuilder();
 		for (SnakeServer snake : snakes) {
@@ -354,11 +352,17 @@ public class SnakeServer {
 		for (SnakeServer snake : snakes) {
 			JsonArrayBuilder pixels=Json.createArrayBuilder();
 			for (int i = 0; i < snake.length; i++) {
-				pixels.add(Json.createObjectBuilder().add("X", snake.x[i]).add("Y", snake.y[i]));
+				pixels.add(Json.createObjectBuilder()
+						.add("X", snake.x[i])
+						.add("Y", snake.y[i]));
 			}
-			array.add(Json.createObjectBuilder().add("färg", snake.färg).add("pixels", pixels));
+			array.add(Json.createObjectBuilder()
+					.add("färg", snake.färg)
+					.add("pixels", pixels));
 		}
-		arrayBuilder.add(Json.createObjectBuilder().add("type", "players").add("players", array));
+		arrayBuilder.add(Json.createObjectBuilder()
+				.add("type", "players")
+				.add("players", array));
 		if (highscoreBool) {
 			highscore();
 		}
