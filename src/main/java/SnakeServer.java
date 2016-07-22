@@ -3,7 +3,6 @@ import java.util.*;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
@@ -238,7 +237,7 @@ public class SnakeServer {
 					.add("poäng", poäng)
 					.add("highscore", snake.highscore));
 		}
-		arrayBuilder.add(Json.createObjectBuilder().add("type", "players").add("players", array));
+		arrayBuilder.add(Json.createObjectBuilder().add("type", "highscore").add("highscore", array));
 		highscoreBool=false;
 	}
 	public static void update() {
