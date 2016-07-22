@@ -81,7 +81,7 @@ public class SnakeServer {
 			else if (string.equals("INIT")) {
 				färg = scanner.next();
 				scanner.useDelimiter("\\z"); 
-				namn = scanner.next().substring(1).replace(";", ":");
+				namn = scanner.next().substring(1);
 				snakes.add(this);
 				reset();
 				send(Json.createObjectBuilder()
