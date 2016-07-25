@@ -6,12 +6,12 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value="/skepp")
 public class Skepp {
-	static ArrayList<Skepp> ansutna = new ArrayList<>();
+	static ArrayList<Skepp> anslutna = new ArrayList<>();
 	Session session;
 	
 	@OnClose
 	public void close() {
-		ansutna.remove(this);
+		anslutna.remove(this);
 	}
 	@OnError
 	public void error(Throwable	throwable) {
@@ -20,12 +20,13 @@ public class Skepp {
 	@OnOpen
 	public void open(Session session) {
 		this.session=session;
-		ansutna.add(this);
+		anslutna.add(this);
+	
 	}
 
 	@OnMessage
 	public void taemot(String message) {
-		
+		skicka("Hello World");
 	}
 	public void skicka(String message){
 		try {
@@ -35,7 +36,7 @@ public class Skepp {
 		}
 	}
 	public static void skickaAlla(String message){
-		for (Skepp skepp : ansutna) {
+		for (Skepp skepp : anslutna) {
 			skepp.skicka(message);
 		}
 	}
