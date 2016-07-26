@@ -64,8 +64,8 @@ public class Skepp {
 		}
 		else if (string.toLowerCase().equals("annan")) {
 			for (Skepp skepp : anslutna) {
-				String string2 = new String(skepp.session.toString());
-				String string3 = new String(message.split(" ")[1]);
+				String string2 = new String(skepp.session.toString().trim());
+				String string3 = new String(message.split(" ")[1].trim());
 				
 				skickaAlla(skepp.session.toString());
 				skickaAlla(message.split(" ")[1]);
