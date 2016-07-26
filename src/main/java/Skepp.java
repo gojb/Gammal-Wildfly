@@ -69,7 +69,7 @@ public class Skepp {
 				if (message.split(" ")[1].equals(skepp.session.toString())) {
 					skickaAlla("hrejghfcv");
 				}
-				if(skepp.session.toString().equals(message.split(" ")[1])){
+				if(skepp.session.toString().equals(message.split(" ")[1].toString())){
 					skickaAlla("japp");
 					skepp.andra=this;
 					andra=skepp;
