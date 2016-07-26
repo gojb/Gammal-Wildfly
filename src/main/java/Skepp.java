@@ -43,20 +43,26 @@ public class Skepp {
 		else if(string.toLowerCase().equals("namn")){
 			anslutna.add(this);
 			namn=scanner.next();
+
 			String allaOnline = "";
 			String allaOnlineID="";
-			for (Skepp skepp : anslutna) {
-				if(skepp!=this){
-					allaOnline+=skepp.namn+",";
+			if(!namn.equals("ettnammsomaldrigskrivs")){
+				for (Skepp skepp : anslutna) {
+					if(skepp!=this){
+						allaOnline+=skepp.namn+",";
+					}
+				}
+				for (Skepp skepp : anslutna) {
+					if(skepp!=this){
+						allaOnlineID+=skepp.session.getId()+",";
+					}
 				}
 			}
-			for (Skepp skepp : anslutna) {
-				if(skepp!=this){
-					allaOnlineID+=skepp.session.getId()+",";
-				}
+			else{
+				allaOnline="  ";
 			}
 			if(allaOnline.length()>0){
-				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1));
+				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1)+";"+namn);
 			}
 			else{
 				skicka("Ingen online");
