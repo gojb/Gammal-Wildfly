@@ -96,12 +96,16 @@ public class SnakeServer {
 						.add("data",Json.createArrayBuilder().add(Json.createObjectBuilder()
 								.add("type", "plupp")
 								.add("X", pluppX)
-								.add("Y", pluppY))).build().toString());
+								.add("Y", pluppY)
+								)).build().toString());
 				send("START");
 				fördröjning=-1;
 				datasend();
 				if (pause) {
-					send("A PAUSE");
+					send(Json.createObjectBuilder()
+							.add("data",Json.createArrayBuilder().add(Json.createObjectBuilder()
+									.add("type", "pause")
+									)).build().toString());
 				}
 			}
 			else if (string.equals("RES")) {
@@ -116,11 +120,12 @@ public class SnakeServer {
 			else if(string.equals("PAUSE")){
 				pause=!pause;
 				if (pause) {
-					sendAll("A PAUSE");
+					arrayBuilder.add(Json.createObjectBuilder()
+							.add("type", "pause"));
 				}
 				else {
-					sendAll("A UNPAUSE");
-
+					arrayBuilder.add(Json.createObjectBuilder()
+							.add("type", "unpause"));
 				}
 			}
 			scanner.close();
@@ -172,8 +177,9 @@ public class SnakeServer {
 	void gameover(String orsak){
 		arrayBuilder.add(Json.createObjectBuilder()
 				.add("type", "gameover")
+				.add("namn", namn)
 				.add("orsak", orsak)
-				.add("namn", namn));
+				);
 		reset();
 	}
 	private boolean setRiktning(String nyRiktning) {

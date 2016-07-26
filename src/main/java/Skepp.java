@@ -11,6 +11,7 @@ public class Skepp {
 	Scanner scanner;
 	Session session;
 	String namn, sessionNamn;
+	Skepp andra;
 
 	@OnClose
 	public void close() {
@@ -56,6 +57,12 @@ public class Skepp {
 				skicka("Ingen online");
 			}
 		}
+//		andra=anslutna.get(1);
+//		anslutna.get(1).andra=this;
+		
+	}
+	public void skickaTillAndra(String message) {
+		andra.skicka(message);
 	}
 	public void skicka(String message){
 		try {
