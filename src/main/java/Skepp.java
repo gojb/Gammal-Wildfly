@@ -45,9 +45,16 @@ public class Skepp {
 			skicka(namn);
 			String allaOnline = "";
 			for (Skepp skepp : anslutna) {
-				allaOnline+=skepp.namn+",";
+				if(skepp!=this){
+					allaOnline+=skepp.namn+",";
+				}
 			}
-			skicka("Alla online = "+allaOnline.substring(0, allaOnline.length()-1));
+			if(allaOnline.length()>0){
+				skicka("Alla online = "+allaOnline.substring(0, allaOnline.length()-1));
+			}
+			else{
+				skicka("Ingen online");
+			}
 		}
 	}
 	public void skicka(String message){
