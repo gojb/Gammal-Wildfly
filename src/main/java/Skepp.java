@@ -25,8 +25,7 @@ public class Skepp {
 	public void open(Session session) {
 		this.session=session;
 		anslutna.add(this);
-		sessionNamn=this.toString();
-
+		skicka(session.toString());
 	}
 
 	@OnMessage
