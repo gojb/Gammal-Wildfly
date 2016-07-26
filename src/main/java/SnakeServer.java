@@ -267,8 +267,11 @@ public class SnakeServer {
 					else if (snake.riktning.equals("left"))
 						snake.x[0]-=1;
 				}
-				else{ 
-					snake.fördröjning--; 
+				else{
+					if (--snake.fördröjning==0) {
+						arrayBuilder.add(Json.createObjectBuilder()
+								.add("type", "cleangameover"));
+					}
 				}
 				snake.senasteriktning=snake.riktning;
 			}
