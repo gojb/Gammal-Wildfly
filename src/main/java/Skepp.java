@@ -8,7 +8,6 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value="/skepp")
 public class Skepp {
 	static ArrayList<Skepp> anslutna = new ArrayList<>();
-	static ArrayList<String> allaOnline = new ArrayList<>();
 	Scanner scanner;
 	Session session;
 	String namn, sessionNamn;
@@ -16,12 +15,6 @@ public class Skepp {
 	@OnClose
 	public void close() {
 		anslutna.remove(this);
-		for(int i = 0;i<allaOnline.size();i++){
-			if(allaOnline.get(i).contains(sessionNamn)){
-				allaOnline.remove(i);
-				break;
-			}
-		}
 	}
 	@OnError
 	public void error(Throwable	throwable) {
@@ -50,8 +43,12 @@ public class Skepp {
 		else if(string.toLowerCase().equals("namn")){
 			skicka("HELLO");
 			namn=scanner.next() + ";" + sessionNamn;
-			allaOnline.add(namn);
-			skicka(allaOnline.toString());
+			skicka(namn);
+			String allaOnline = null;
+			for (Skepp skepp : anslutna) {
+				allaOnline+=skepp.namn+",";
+			}
+			skicka(allaOnline.substring(0, allaOnline.length()-1));
 		}
 	}
 	public void skicka(String message){
