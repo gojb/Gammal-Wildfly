@@ -65,20 +65,20 @@ public class Skepp {
 			}
 		}
 		else if (string.toLowerCase().equals("refresh")) {
-			String allaOnline = "";
-			String allaOnlineID="";
+			String allaOnline1 = "";
+			String allaOnlineID1="";
 			for (Skepp skepp : anslutna) {
 				if(skepp!=this&&skepp.kopplad==false){
-					allaOnline+=skepp.namn+",";
+					allaOnline1+=skepp.namn+",";
 				}
 			}
 			for (Skepp skepp : anslutna) {
 				if(skepp!=this&&skepp.kopplad==false){
-					allaOnlineID+=skepp.session.getId()+",";
+					allaOnlineID1+=skepp.session.getId()+",";
 				}
 			}
-			if(allaOnline.length()>0){
-				skicka("refresh ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1));
+			if(allaOnline1.length()>0){
+				skicka("refresh ="+allaOnline1.substring(0, allaOnline1.length()-1)+";"+allaOnlineID1.substring(0, allaOnlineID1.length()-1));
 			}				
 		}
 		else if (string.toLowerCase().equals("annan")) {
