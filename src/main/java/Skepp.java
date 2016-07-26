@@ -25,7 +25,7 @@ public class Skepp {
 	@OnOpen
 	public void open(Session session) {
 		this.session=session;
-		skicka(session.toString());
+		skicka(session.getId());
 	}
 
 	@OnMessage
