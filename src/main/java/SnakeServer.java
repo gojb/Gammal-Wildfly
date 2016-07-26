@@ -122,10 +122,12 @@ public class SnakeServer {
 				if (pause) {
 					arrayBuilder.add(Json.createObjectBuilder()
 							.add("type", "pause"));
+					sendAll();
 				}
 				else {
 					arrayBuilder.add(Json.createObjectBuilder()
 							.add("type", "unpause"));
+					sendAll();
 				}
 			}
 			scanner.close();
