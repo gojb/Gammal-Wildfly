@@ -42,31 +42,44 @@ public class Skepp {
 			skicka(anslutna.get(0).toString());
 		}
 		else if(string.toLowerCase().equals("namn")){
-			namn=scanner.next().toLowerCase();
+			anslutna.add(this);
+			namn=scanner.next();
+
 			String allaOnline = "";
 			String allaOnlineID="";
-			if(!namn.equals("ettnammsomaldrigskrivs".toLowerCase())){
-				anslutna.add(this);
-				for (Skepp skepp : anslutna) {
-					if(skepp!=this&&skepp.kopplad==false){
-						allaOnline+=skepp.namn+",";
-					}
-				}
-				for (Skepp skepp : anslutna) {
-					if(skepp!=this&&skepp.kopplad==false){
-						allaOnlineID+=skepp.session.getId()+",";
-					}
+			for (Skepp skepp : anslutna) {
+				if(skepp!=this&&skepp.kopplad==false){
+					allaOnline+=skepp.namn+",";
 				}
 			}
-			else{
-				allaOnline="  ";
+			for (Skepp skepp : anslutna) {
+				if(skepp!=this&&skepp.kopplad==false){
+					allaOnlineID+=skepp.session.getId()+",";
+				}
 			}
 			if(allaOnline.length()>0){
-				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1)+";"+namn);
+				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1));
 			}
 			else{
 				skicka("Ingen online");
 			}
+		}
+		else if (string.toLowerCase().equals("refresh")) {
+			String allaOnline = "";
+			String allaOnlineID="";
+			for (Skepp skepp : anslutna) {
+				if(skepp!=this&&skepp.kopplad==false){
+					allaOnline+=skepp.namn+",";
+				}
+			}
+			for (Skepp skepp : anslutna) {
+				if(skepp!=this&&skepp.kopplad==false){
+					allaOnlineID+=skepp.session.getId()+",";
+				}
+			}
+			if(allaOnline.length()>0){
+				skicka("refresh ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1));
+			}				
 		}
 		else if (string.toLowerCase().equals("annan")) {
 			for (Skepp skepp : anslutna) {
@@ -83,6 +96,11 @@ public class Skepp {
 				}
 			}
 		}
+		else{
+			skicka("ERROR! Hittade ingen if-sats med " + string);
+		}
+		//		andra=anslutna.get(1);
+		//		anslutna.get(1).andra=this;
 
 	}
 	public void skickaTillAndra(String message) {
