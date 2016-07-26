@@ -42,7 +42,7 @@ public class Skepp {
 			skicka(anslutna.get(0).toString());
 		}
 		else if(string.toLowerCase().equals("namn")){
-			namn=scanner.next();
+			namn=scanner.next().toLowerCase();
 			String allaOnline = "";
 			String allaOnlineID="";
 			if(!namn.equals("ettnammsomaldrigskrivs")){
