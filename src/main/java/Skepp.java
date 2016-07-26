@@ -45,7 +45,7 @@ public class Skepp {
 			namn=scanner.next().toLowerCase();
 			String allaOnline = "";
 			String allaOnlineID="";
-			if(!namn.equals("ettnammsomaldrigskrivs")){
+			if(!namn.equals("ettnammsomaldrigskrivs".toLowerCase())){
 				anslutna.add(this);
 				for (Skepp skepp : anslutna) {
 					if(skepp!=this&&skepp.kopplad==false){
