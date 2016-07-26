@@ -52,7 +52,7 @@ public class Skepp {
 			}
 			for (Skepp skepp : anslutna) {
 				if(skepp!=this){
-					allaOnlineID+=skepp.session+",";
+					allaOnlineID+=skepp.session.getId()+",";
 				}
 			}
 			if(allaOnline.length()>0){
@@ -64,7 +64,7 @@ public class Skepp {
 		}
 		else if (string.toLowerCase().equals("annan")) {
 			for (Skepp skepp : anslutna) {
-				String string2 = new String(skepp.session.toString().trim());
+				String string2 = new String(skepp.session.getId());
 				String string3 = new String(message.split(" ")[1].trim());
 				
 				skickaAlla(string2);
