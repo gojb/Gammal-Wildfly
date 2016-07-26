@@ -12,32 +12,37 @@ public class Skepp {
 	Scanner scanner;
 	Session session;
 	String namn, sessionNamn;
-	
+
 	@OnClose
 	public void close() {
 		anslutna.remove(this);
-		allaOnline.removeAll(allaOnline);
+		for(int i = 0;i<allaOnline.size();i++){
+			if(allaOnline.get(i).contains(sessionNamn)){
+				allaOnline.remove(i);
+				break;
+			}
+		}
 	}
 	@OnError
 	public void error(Throwable	throwable) {
-		
+
 	}
 	@OnOpen
 	public void open(Session session) {
 		this.session=session;
 		anslutna.add(this);
 		sessionNamn=this.toString();
-	
+
 	}
 
 	@OnMessage
 	public void taemot(String message) {
-		
+
 		message=message.toLowerCase();
-		
+
 		scanner = new Scanner(message);
 		String string=scanner.next();
-		
+
 		if(string.equals("starta")){
 			skicka("starta");
 			skicka(anslutna.get(0).toString());
