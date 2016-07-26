@@ -42,22 +42,27 @@ public class Skepp {
 			skicka(anslutna.get(0).toString());
 		}
 		else if(string.toLowerCase().equals("namn")){
-			anslutna.add(this);
 			namn=scanner.next();
 			String allaOnline = "";
 			String allaOnlineID="";
-			for (Skepp skepp : anslutna) {
-				if(skepp!=this&&skepp.kopplad==false){
-					allaOnline+=skepp.namn+",";
+			if(!namn.equals("ettnammsomaldrigskrivs")){
+				anslutna.add(this);
+				for (Skepp skepp : anslutna) {
+					if(skepp!=this&&skepp.kopplad==false){
+						allaOnline+=skepp.namn+",";
+					}
+				}
+				for (Skepp skepp : anslutna) {
+					if(skepp!=this&&skepp.kopplad==false){
+						allaOnlineID+=skepp.session.getId()+",";
+					}
 				}
 			}
-			for (Skepp skepp : anslutna) {
-				if(skepp!=this&&skepp.kopplad==false){
-					allaOnlineID+=skepp.session.getId()+",";
-				}
+			else{
+				allaOnline="  ";
 			}
 			if(allaOnline.length()>0){
-				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1));
+				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1)+";"+namn);
 			}
 			else{
 				skicka("Ingen online");
