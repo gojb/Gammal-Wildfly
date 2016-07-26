@@ -29,6 +29,7 @@ public class Skepp {
 		message=message.toLowerCase();
 		if(message.equals("starta")){
 			skicka("starta");
+			skicka(anslutna.get(0).toString());
 		}
 	}
 	public void skicka(String message){
