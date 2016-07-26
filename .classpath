@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="javax.json-api-1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Java/jboss-websocket-api_1.0_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="jboss-websocket-api_1.0_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
