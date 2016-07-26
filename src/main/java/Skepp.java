@@ -67,6 +67,7 @@ public class Skepp {
 				skickaAlla(skepp.session.toString());
 				skickaAlla(message.split(" ")[1]);
 				if(skepp.session.toString().equals(message.split(" ")[1])){
+					skickaAlla("japp");
 					skepp.andra=this;
 					andra=skepp;
 					skickaTillAndra(">:)");
