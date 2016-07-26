@@ -74,6 +74,7 @@ public class SnakeServer {
 	}
 	@OnMessage
 	public void in(String message){
+		
 		Scanner scanner;
 		try {
 			scanner = new Scanner(message);
