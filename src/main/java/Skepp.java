@@ -70,7 +70,7 @@ public class Skepp {
 				if (string2.equals(string3)) {
 					skepp.andra=this;
 					andra=skepp;
-					skickaTillAndra(">:)");
+					skickaTillAndra("Ihopkopplad " + skepp.namn);
 				}
 			}
 		}
