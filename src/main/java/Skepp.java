@@ -10,8 +10,7 @@ public class Skepp {
 	static ArrayList<Skepp> anslutna = new ArrayList<>();
 	Scanner scanner;
 	Session session;
-	String namn, sessionNamn;
-	
+	String namn, sessionNamn, annansSession;
 	Skepp andra;
 
 
@@ -61,6 +60,15 @@ public class Skepp {
 			}
 			else{
 				skicka("Ingen online");
+			}
+		}
+		else if (string.toLowerCase().equals("andra")) {
+			for (Skepp skepp : anslutna) {
+				if(skepp.session.toString().equals(message.split(" ")[1].split("@")[1])){
+					skepp.andra=this;
+					andra=skepp;
+					skickaTillAndra(">:)");
+				}
 			}
 		}
 //		andra=anslutna.get(1);
