@@ -11,10 +11,12 @@ public class Skepp {
 	static ArrayList<String> allaOnline = new ArrayList<>();
 	Scanner scanner;
 	Session session;
+	String namn, sessionNamn;
 	
 	@OnClose
 	public void close() {
 		anslutna.remove(this);
+		allaOnline.removeAll(allaOnline);
 	}
 	@OnError
 	public void error(Throwable	throwable) {
@@ -24,6 +26,7 @@ public class Skepp {
 	public void open(Session session) {
 		this.session=session;
 		anslutna.add(this);
+		sessionNamn=this.toString();
 	
 	}
 
@@ -39,8 +42,10 @@ public class Skepp {
 			skicka("starta");
 			skicka(anslutna.get(0).toString());
 		}
-		else if(string.equals("namn")){
-			allaOnline.add(scanner.next());
+		else if(string.toLowerCase().equals("namn")){
+			skicka("HELLO");
+			namn=scanner.next() + ";" + sessionNamn;
+			allaOnline.add(namn);
 			skicka(allaOnline.toString());
 		}
 	}
