@@ -43,7 +43,7 @@ public class Skepp {
 		else if(string.toLowerCase().equals("namn")){
 			namn=scanner.next();
 			skicka(namn);
-			String allaOnline = null;
+			String allaOnline = "";
 			for (Skepp skepp : anslutna) {
 				allaOnline+=skepp.namn+",";
 			}
