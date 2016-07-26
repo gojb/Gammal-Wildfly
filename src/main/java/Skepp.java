@@ -25,7 +25,6 @@ public class Skepp {
 	@OnOpen
 	public void open(Session session) {
 		this.session=session;
-		anslutna.add(this);
 		skicka(session.toString());
 	}
 
@@ -42,6 +41,7 @@ public class Skepp {
 			skicka(anslutna.get(0).toString());
 		}
 		else if(string.toLowerCase().equals("namn")){
+			anslutna.add(this);
 			namn=scanner.next();
 			String allaOnline = "";
 			String allaOnlineID="";
