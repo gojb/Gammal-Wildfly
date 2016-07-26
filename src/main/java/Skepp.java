@@ -41,14 +41,13 @@ public class Skepp {
 			skicka(anslutna.get(0).toString());
 		}
 		else if(string.toLowerCase().equals("namn")){
-			skicka("HELLO");
-			namn=scanner.next() + ";" + sessionNamn;
+			namn=scanner.next();
 			skicka(namn);
 			String allaOnline = null;
 			for (Skepp skepp : anslutna) {
 				allaOnline+=skepp.namn+",";
 			}
-			skicka(allaOnline.substring(0, allaOnline.length()-1));
+			skicka("Alla online = "+allaOnline.substring(0, allaOnline.length()-1));
 		}
 	}
 	public void skicka(String message){
