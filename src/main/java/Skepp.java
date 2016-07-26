@@ -12,6 +12,7 @@ public class Skepp {
 	Session session;
 	String namn, sessionNamn, annansSession;
 	Skepp andra;
+	boolean kopplad=false;
 
 
 	@OnClose
@@ -48,12 +49,12 @@ public class Skepp {
 			String allaOnlineID="";
 			if(!namn.equals("ettnammsomaldrigskrivs")){
 				for (Skepp skepp : anslutna) {
-					if(skepp!=this){
+					if(skepp!=this&&skepp.kopplad==false){
 						allaOnline+=skepp.namn+",";
 					}
 				}
 				for (Skepp skepp : anslutna) {
-					if(skepp!=this){
+					if(skepp!=this&&skepp.kopplad==false){
 						allaOnlineID+=skepp.session.getId()+",";
 					}
 				}
@@ -76,6 +77,8 @@ public class Skepp {
 				if (string2.equals(string3)) {
 					skepp.andra=this;
 					andra=skepp;
+					kopplad=true;
+					andra.kopplad=true;
 					skickaTillAndra("Ihopkopplad " + namn);
 					skicka("Ihopkopplad " + andra.namn);
 				}
