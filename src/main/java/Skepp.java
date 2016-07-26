@@ -71,8 +71,9 @@ public class Skepp {
 				if (string2.equals(string3)) {
 					skepp.andra=this;
 					andra=skepp;
-					skickaTillAndra("Ihopkopplad " + skepp.namn);
 					kopplad=true;
+					skickaTillAndra("Ihopkopplad " + namn);
+					skicka("Ihopkopplad " + andra.namn);
 				}
 			}
 		}
