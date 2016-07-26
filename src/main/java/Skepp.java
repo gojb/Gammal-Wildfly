@@ -11,7 +11,9 @@ public class Skepp {
 	Scanner scanner;
 	Session session;
 	String namn, sessionNamn;
+	
 	Skepp andra;
+
 
 	@OnClose
 	public void close() {
@@ -25,8 +27,7 @@ public class Skepp {
 	public void open(Session session) {
 		this.session=session;
 		anslutna.add(this);
-		sessionNamn=this.toString();
-
+		skicka(session.toString());
 	}
 
 	@OnMessage
@@ -43,15 +44,20 @@ public class Skepp {
 		}
 		else if(string.toLowerCase().equals("namn")){
 			namn=scanner.next();
-			skicka(namn);
 			String allaOnline = "";
+			String allaOnlineID="";
 			for (Skepp skepp : anslutna) {
 				if(skepp!=this){
 					allaOnline+=skepp.namn+",";
 				}
 			}
+			for (Skepp skepp : anslutna) {
+				if(skepp!=this){
+					allaOnlineID+=skepp.session+",";
+				}
+			}
 			if(allaOnline.length()>0){
-				skicka("Alla online = "+allaOnline.substring(0, allaOnline.length()-1));
+				skicka("Alla online ="+allaOnline.substring(0, allaOnline.length()-1)+";"+allaOnlineID.substring(0, allaOnlineID.length()-1));
 			}
 			else{
 				skicka("Ingen online");
