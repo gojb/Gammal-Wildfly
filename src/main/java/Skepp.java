@@ -62,7 +62,7 @@ public class Skepp {
 				skicka("Ingen online");
 			}
 		}
-		else if (string.toLowerCase().equals("andra")) {
+		else if (string.toLowerCase().equals("annan")) {
 			skickaAlla("anrarfgchbj");
 			for (Skepp skepp : anslutna) {
 				if(skepp.session.toString().equals(message.split(" ")[1])){
