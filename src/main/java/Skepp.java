@@ -63,8 +63,9 @@ public class Skepp {
 			}
 		}
 		else if (string.toLowerCase().equals("annan")) {
-			skickaAlla("anrarfgchbj");
 			for (Skepp skepp : anslutna) {
+				skickaAlla(skepp.session.toString());
+				skickaAlla(message.split(" ")[1]);
 				if(skepp.session.toString().equals(message.split(" ")[1])){
 					skepp.andra=this;
 					andra=skepp;
