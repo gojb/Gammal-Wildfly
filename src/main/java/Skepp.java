@@ -66,16 +66,8 @@ public class Skepp {
 			for (Skepp skepp : anslutna) {
 				String string2 = new String(skepp.session.getId().toLowerCase());
 				String string3 = new String(message.split(" ")[1].toString().toLowerCase());
-				
-				skickaAlla(string2+" "+Integer.toString(string2.length()));
-				skickaAlla(string3+" "+Integer.toString(string2.length()));
-				if (string2.trim().equals(string3.trim())) {
-					skickaAlla("hej");
-				}
+
 				if (string2.equals(string3)) {
-					skickaAlla("hejhjklo");
-				}
-				if(skepp.session.toString().equals(message.split(" ")[1].toString())){
 					skickaAlla("japp");
 					skepp.andra=this;
 					andra=skepp;
@@ -83,9 +75,9 @@ public class Skepp {
 				}
 			}
 		}
-//		andra=anslutna.get(1);
-//		anslutna.get(1).andra=this;
-		
+		//		andra=anslutna.get(1);
+		//		anslutna.get(1).andra=this;
+
 	}
 	public void skickaTillAndra(String message) {
 		andra.skicka(message);
