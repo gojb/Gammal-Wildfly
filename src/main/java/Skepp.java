@@ -68,7 +68,6 @@ public class Skepp {
 				String string3 = new String(message.split(" ")[1].toString().toLowerCase());
 
 				if (string2.equals(string3)) {
-					skickaAlla("japp");
 					skepp.andra=this;
 					andra=skepp;
 					skickaTillAndra(">:)");
