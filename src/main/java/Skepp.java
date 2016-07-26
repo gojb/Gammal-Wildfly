@@ -67,8 +67,8 @@ public class Skepp {
 				String string2 = new String(skepp.session.toString().trim());
 				String string3 = new String(message.split(" ")[1].trim());
 				
-				skickaAlla(string);
 				skickaAlla(string2);
+				skickaAlla(string3);
 				if (string2.equals(string3)) {
 					skickaAlla("hej");
 				}
