@@ -42,12 +42,11 @@ public class Skepp {
 			skicka(anslutna.get(0).toString());
 		}
 		else if(string.toLowerCase().equals("namn")){
-			anslutna.add(this);
 			namn=scanner.next();
-
 			String allaOnline = "";
 			String allaOnlineID="";
 			if(!namn.equals("ettnammsomaldrigskrivs")){
+				anslutna.add(this);
 				for (Skepp skepp : anslutna) {
 					if(skepp!=this&&skepp.kopplad==false){
 						allaOnline+=skepp.namn+",";
