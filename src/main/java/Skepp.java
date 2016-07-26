@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -7,6 +8,8 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value="/skepp")
 public class Skepp {
 	static ArrayList<Skepp> anslutna = new ArrayList<>();
+	static ArrayList<String> allaOnline = new ArrayList<>();
+	Scanner scanner;
 	Session session;
 	
 	@OnClose
@@ -26,10 +29,19 @@ public class Skepp {
 
 	@OnMessage
 	public void taemot(String message) {
+		
 		message=message.toLowerCase();
-		if(message.equals("starta")){
+		
+		scanner = new Scanner(message);
+		String string=scanner.next();
+		
+		if(string.equals("starta")){
 			skicka("starta");
 			skicka(anslutna.get(0).toString());
+		}
+		else if(string.equals("namn")){
+			allaOnline.add(scanner.next());
+			skicka(allaOnline.toString());
 		}
 	}
 	public void skicka(String message){
