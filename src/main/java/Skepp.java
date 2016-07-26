@@ -67,8 +67,8 @@ public class Skepp {
 				String string2 = new String(skepp.session.getId().toLowerCase());
 				String string3 = new String(message.split(" ")[1].toString().toLowerCase());
 				
-				skickaAlla(string2+"  "+string2.length());
-				skickaAlla(string3+"  "+string3.length());
+				skickaAlla(string2+" "+Integer.toString(string2.length()));
+				skickaAlla(string3+" "+Integer.toString(string2.length()));
 				if (string2.trim().equals(string3.trim())) {
 					skickaAlla("hej");
 				}
