@@ -65,12 +65,15 @@ public class Skepp {
 		else if (string.toLowerCase().equals("annan")) {
 			for (Skepp skepp : anslutna) {
 				String string2 = new String(skepp.session.getId());
-				String string3 = new String(message.split(" ")[1].trim());
+				String string3 = new String(message.split(" ")[1].toString());
 				
-				skickaAlla(string2.trim());
-				skickaAlla(string3.trim());
+				skickaAlla(string2);
+				skickaAlla(string3);
 				if (string2.trim().equals(string3.trim())) {
 					skickaAlla("hej");
+				}
+				if (string2.equals(string3)) {
+					skickaAlla("hejhjklö");
 				}
 				if(skepp.session.toString().equals(message.split(" ")[1].toString())){
 					skickaAlla("japp");
