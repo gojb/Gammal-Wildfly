@@ -72,6 +72,7 @@ public class Skepp {
 					skepp.andra=this;
 					andra=skepp;
 					kopplad=true;
+					andra.kopplad=true;
 					skickaTillAndra("Ihopkopplad " + namn);
 					skicka("Ihopkopplad " + andra.namn);
 				}
