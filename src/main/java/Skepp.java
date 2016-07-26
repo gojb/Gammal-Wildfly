@@ -26,7 +26,10 @@ public class Skepp {
 
 	@OnMessage
 	public void taemot(String message) {
-		skicka("Hello World");
+		message=message.toLowerCase();
+		if(message.equals("starta")){
+			skicka("starta");
+		}
 	}
 	public void skicka(String message){
 		try {
