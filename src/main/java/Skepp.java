@@ -83,8 +83,6 @@ public class Skepp {
 				}
 			}
 		}
-		//		andra=anslutna.get(1);
-		//		anslutna.get(1).andra=this;
 
 	}
 	public void skickaTillAndra(String message) {
