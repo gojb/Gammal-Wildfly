@@ -73,7 +73,7 @@ public class Skepp {
 					skickaAlla("hej");
 				}
 				if (string2.equals(string3)) {
-					skickaAlla("hejhjklö");
+					skickaAlla("hejhjklo");
 				}
 				if(skepp.session.toString().equals(message.split(" ")[1].toString())){
 					skickaAlla("japp");
