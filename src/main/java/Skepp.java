@@ -99,17 +99,18 @@ public class Skepp {
 		}
 		else if (string.toLowerCase().equals("klar")) {
 			klar=true;
+			skickaTillAndra("klar");
 			if(andra.klar==true){
 				Random random = new Random();
 				int rand = random.nextInt(1);
 				//Vem börjar
 				if(rand==0){
-					skickaTillAndra("klar start");
-					skicka("klar inte");
+					skickaTillAndra("bådaklar start");
+					skicka("bådaklar inte");
 				}
 				else{
-						skicka("klar start");
-						skickaTillAndra("klar inte");
+						skicka("bådaklar start");
+						skickaTillAndra("bådaklar inte");
 				}
 			}
 			skicka("--klar: "+klar + " --- andra.klar: "+andra.klar);
