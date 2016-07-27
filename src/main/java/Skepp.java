@@ -1,3 +1,9 @@
+//När push av servern fungerar, testa:
+//Fungerar servern i avseende att kolla om båda är klara?
+//Fungerar klick och bombning?
+//Målas rutorna vid träff och miss?
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -114,6 +120,9 @@ public class Skepp {
 				}
 			}
 			skicka("--klar: "+klar + " --- andra.klar: "+andra.klar);
+		}
+		else if (string.toLowerCase().equals("skjut")||string.toLowerCase().equals("skott")) {
+			skickaTillAndra(message);
 		}
 		else{
 			skicka("ERROR! Hittade ingen if-sats med " + string);
