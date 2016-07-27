@@ -12,7 +12,7 @@ public class Skepp {
 	Session session;
 	String namn, sessionNamn, annansSession;
 	Skepp andra;
-	boolean kopplad=false;
+	boolean kopplad=false, klar=false;
 
 
 	@OnClose
@@ -95,6 +95,14 @@ public class Skepp {
 					skicka("Ihopkopplad " + andra.namn);
 				}
 			}
+		}
+		else if (string.toLowerCase().equals("klar")) {
+			klar=true;
+			if(andra.klar==true){
+				skickaTillAndra("klar");
+				skicka("klar");
+			}
+			skicka("klar: "+klar + " --- andra.klar: "+andra.klar);
 		}
 		else{
 			skicka("ERROR! Hittade ingen if-sats med " + string);
