@@ -105,11 +105,11 @@ public class Skepp {
 				//Vem börjar
 				if(rand==0){
 					skickaTillAndra("klar start");
-					skicka("klar");
+					skicka("klar inte");
 				}
 				else{
 						skicka("klar start");
-						skickaTillAndra("klar");
+						skickaTillAndra("klar inte");
 				}
 			}
 			skicka("--klar: "+klar + " --- andra.klar: "+andra.klar);
