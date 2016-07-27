@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.websocket.*;
@@ -99,10 +100,19 @@ public class Skepp {
 		else if (string.toLowerCase().equals("klar")) {
 			klar=true;
 			if(andra.klar==true){
-				skickaTillAndra("klar");
-				skicka("klar");
+				Random random = new Random();
+				int rand = random.nextInt(1);
+				//Vem börjar
+				if(rand==0){
+					skickaTillAndra("klar start");
+					skicka("klar");
+				}
+				else{
+						skicka("klar start");
+						skickaTillAndra("klar");
+				}
 			}
-			skicka("klar: "+klar + " --- andra.klar: "+andra.klar);
+			skicka("--klar: "+klar + " --- andra.klar: "+andra.klar);
 		}
 		else{
 			skicka("ERROR! Hittade ingen if-sats med " + string);
