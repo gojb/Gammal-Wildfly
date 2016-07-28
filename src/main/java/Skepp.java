@@ -2,6 +2,7 @@
 //Fungerar servern i avseende att kolla om båda är klara?
 //Fungerar klick och bombning?
 //Målas rutorna vid träff och miss?
+//--- Lyckas ej pusha tror jag. Nya ändringar i koden händer det inget med
 
 
 import java.io.IOException;
