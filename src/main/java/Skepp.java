@@ -103,7 +103,7 @@ public class Skepp {
 				}
 			}
 		}
-		else if (string.toLowerCase().equals("klar")) {
+		else if (string.toLowerCase().equals("klar".toLowerCase())) {
 			klar=true;
 			skickaTillAndra("klar");
 			if(andra.klar==true){
@@ -126,6 +126,7 @@ public class Skepp {
 		}
 		else{
 			skicka("ERROR! Hittade ingen if-sats med " + string);
+			skicka("MESSAGE = --"+message+"--");
 		}
 		//		andra=anslutna.get(1);
 		//		anslutna.get(1).andra=this;
