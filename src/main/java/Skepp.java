@@ -41,6 +41,8 @@ public class Skepp {
 	public void taemot(String message) {
 
 		message=message.toLowerCase();
+		
+		skicka("message --> "+message);
 
 		scanner = new Scanner(message);
 		String string=scanner.next();
