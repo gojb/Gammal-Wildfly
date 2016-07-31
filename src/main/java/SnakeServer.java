@@ -72,7 +72,10 @@ public class SnakeServer {
 			while(session.isOpen()){
 				send(message);
 				try {
-					wait();
+
+					synchronized(this){
+						wait();
+					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -88,7 +91,7 @@ public class SnakeServer {
 	}
 	@OnMessage
 	public void in(String message){
-		
+
 		Scanner scanner;
 		try {
 			scanner = new Scanner(message);
@@ -226,8 +229,10 @@ public class SnakeServer {
 	public static void sendAll(){
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 		for (SnakeServer snake : snakes) {
-//			snake.send(message);
-			snake.sendloop.notify();
+			//			snake.send(message);
+			synchronized(snake.sendloop){
+				snake.sendloop.notify();
+			}
 		}
 		arrayBuilder=Json.createArrayBuilder();
 	}
