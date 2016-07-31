@@ -1,8 +1,8 @@
-//När push av servern fungerar, testa:
-//Fungerar servern i avseende att kolla om båda är klara?
+//Nï¿½r push av servern fungerar, testa:
+//Fungerar servern i avseende att kolla om bï¿½da ï¿½r klara?
 //Fungerar klick och bombning?
-//Målas rutorna vid träff och miss?
-//--- Lyckas ej pusha tror jag. Nya ändringar i koden händer det inget med
+//Mï¿½las rutorna vid trï¿½ff och miss?
+//--- Lyckas ej pusha tror jag. Nya ï¿½ndringar i koden hï¿½nder det inget med
 
 
 import java.io.IOException;
@@ -112,14 +112,14 @@ public class Skepp {
 			if(andra.klar==true){
 				Random random = new Random();
 				int rand = random.nextInt(1);
-				//Vem börjar
+				//Vem bÃ¶rjar
 				if(rand==0){
-					skickaTillAndra("bådaklar start");
-					skicka("bådaklar inte");
+					skickaTillAndra("bÃ¥daklar start");
+					skicka("bÃ¥daklar inte");
 				}
 				else{
-						skicka("bådaklar start");
-						skickaTillAndra("bådaklar inte");
+						skicka("bÃ¥daklar start");
+						skickaTillAndra("bÃ¥daklar inte");
 				}
 			}
 			skicka("--klar: "+klar + " --- andra.klar: "+andra.klar);
