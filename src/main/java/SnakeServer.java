@@ -231,7 +231,7 @@ public class SnakeServer {
 		for (SnakeServer snake : snakes) {
 			//			snake.send(message);
 			synchronized(snake.sendloop){
-				snake.sendloop.notify();
+				snake.sendloop.notifyAll();
 			}
 		}
 		arrayBuilder=Json.createArrayBuilder();
