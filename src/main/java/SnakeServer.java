@@ -105,6 +105,7 @@ public class SnakeServer {
 
 			}
 			else if (string.equals("INIT")) {
+				sendloop.start();
 				färg = scanner.next();
 				scanner.useDelimiter("\\z"); 
 				namn = scanner.next().substring(1);
