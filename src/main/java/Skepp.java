@@ -1,9 +1,3 @@
-//N�r push av servern fungerar, testa:
-//Fungerar servern i avseende att kolla om b�da �r klara?
-//Fungerar klick och bombning?
-//M�las rutorna vid tr�ff och miss?
-//--- Lyckas ej pusha tror jag. Nya �ndringar i koden h�nder det inget med
-
 
 import java.io.IOException;
 import java.util.ArrayList;
