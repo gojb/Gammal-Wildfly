@@ -72,7 +72,6 @@ public class SnakeServer {
 		public void run() {
 			while(session.isOpen()){				
 				try {
-
 					synchronized(lock){
 						wait();
 					}
