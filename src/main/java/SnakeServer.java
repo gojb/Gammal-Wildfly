@@ -74,8 +74,8 @@ public class SnakeServer {
 		public void run() {
 			while(session.isOpen()){				
 				try {
-					synchronized(this){
-						wait();
+					synchronized(message){
+						message.wait();
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -234,13 +234,12 @@ public class SnakeServer {
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 		//			snake.send(message);
 
-		for (SnakeServer snakeServer : snakes) {
-			Thread thread=snakeServer.sendloop;
-			synchronized(thread){
-				thread.notify();}
+		
+			synchronized(message){
+				message.notifyAll();
+				}
 
-		}
-
+		
 		arrayBuilder=Json.createArrayBuilder();
 	}
 	static void plupp(){
