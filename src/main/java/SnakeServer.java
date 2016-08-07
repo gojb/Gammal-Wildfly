@@ -74,7 +74,7 @@ public class SnakeServer {
 		public void run() {
 			while(session.isOpen()){				
 				try {
-					synchronized(lock){
+					synchronized(this){
 						wait();
 					}
 				} catch (InterruptedException e) {
@@ -235,8 +235,9 @@ public class SnakeServer {
 		//			snake.send(message);
 
 		for (SnakeServer snakeServer : snakes) {
-			synchronized(snakeServer.lock){
-				snakeServer.sendloop.notify();}
+			Thread thread=snakeServer.sendloop;
+			synchronized(thread){
+				thread.notify();}
 
 		}
 
