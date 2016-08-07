@@ -15,7 +15,8 @@ public class SnakeServer {
 	public static int pluppX,pluppY;
 	public static boolean highscoreBool;
 	public static JsonArrayBuilder arrayBuilder=Json.createArrayBuilder();;
-	static String message;
+	static String message;	
+	private static final Object LOCK = new Object();
 
 	public static Thread gameloop=new Thread(){
 		@Override
@@ -59,7 +60,7 @@ public class SnakeServer {
 		gameloop.start();;
 	}
 
-	private final Object lock = new Object();
+
 	private Session session;
 	private int[] x=new int[1000],y=new int[1000];
 	private int length;
@@ -74,8 +75,8 @@ public class SnakeServer {
 		public void run() {
 			while(session.isOpen()){				
 				try {
-					synchronized(message){
-						message.wait();
+					synchronized(LOCK){
+						LOCK.wait();
 						send(message);
 					}
 				} catch (InterruptedException e) {
@@ -83,8 +84,6 @@ public class SnakeServer {
 					e.printStackTrace();
 					sendAll(e.getStackTrace().toString());
 				}
-				
-
 			}
 		};
 	};
@@ -237,8 +236,8 @@ public class SnakeServer {
 		//			snake.send(message);
 
 
-		synchronized(message){
-			message.notifyAll();
+		synchronized(LOCK){
+			LOCK.notifyAll();
 		}
 
 
