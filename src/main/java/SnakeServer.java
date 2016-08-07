@@ -123,7 +123,8 @@ public class SnakeServer {
 								)).build().toString());
 				send("START");
 				fördröjning=-1;
-				datasend();
+				databuild();
+				sendAll();
 				if (pause) {
 					send(Json.createObjectBuilder()
 							.add("data",Json.createArrayBuilder().add(Json.createObjectBuilder()
@@ -232,14 +233,13 @@ public class SnakeServer {
 		}
 	}
 	public static void sendAll(){
-		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
+		
 		//			snake.send(message);
 
 
 		synchronized(LOCK){
 			LOCK.notifyAll();
 		}
-
 
 		arrayBuilder=Json.createArrayBuilder();
 	}
@@ -284,7 +284,7 @@ public class SnakeServer {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		long date2 = System.currentTimeMillis(),date3 = 0,date4=0,date5=0,date6=0; 
+		long date2 = System.currentTimeMillis(),date3 = 0,date4=0,date5=0,date6=0,date7; 
 		try{
 
 			//Gör alla förflyttningar
@@ -364,15 +364,17 @@ public class SnakeServer {
 				}
 			}
 			date5 = System.currentTimeMillis();
-			datasend();
+			databuild();
+			date6 = System.currentTimeMillis();
+			sendAll();
 
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
 			sendAll("E "+e.toString());
 		}
-		date6 = System.currentTimeMillis();
-		long diff=date6-date;
+		date7 = System.currentTimeMillis();
+		long diff=date7-date;
 		if (diff>4) {
 			arrayBuilder.add(Json.createObjectBuilder().add("type", "delay")
 					.add("delay", "Total"+diff+
@@ -380,11 +382,12 @@ public class SnakeServer {
 							" Move"+(date3-date2)+
 							" Förl"+(date4-date3)+
 							" Poäng"+(date5-date4)+
-							" Send"+(date6-date5)));
+							" Build"+(date6-date5)+
+							" Send"+(date7-date6)));
 		}
 	}
 
-	private static void datasend() {
+	private static void databuild() {
 		JsonArrayBuilder array=Json.createArrayBuilder();
 
 		//Skicka data till spelarna
@@ -405,6 +408,6 @@ public class SnakeServer {
 		if (highscoreBool) {
 			highscore();
 		}
-		sendAll();
+		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 	}
 }
