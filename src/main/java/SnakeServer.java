@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 
 import javax.json.*;
@@ -380,7 +382,9 @@ public class SnakeServer {
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
-			sendAll("E "+e.getStackTrace().toString());
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			sendAll("E "+errors.toString());
 		}
 		date7 = System.currentTimeMillis();
 		long diff=date7-date;
