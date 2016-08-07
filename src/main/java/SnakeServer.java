@@ -76,12 +76,14 @@ public class SnakeServer {
 				try {
 					synchronized(message){
 						message.wait();
+						send(message);
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					sendAll(e.getStackTrace().toString());
 				}
-				send(message);
+				
 
 			}
 		};
