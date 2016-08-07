@@ -380,7 +380,7 @@ public class SnakeServer {
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
-			sendAll("E "+e.toString());
+			sendAll("E "+e.getMessage());
 		}
 		date7 = System.currentTimeMillis();
 		long diff=date7-date;
