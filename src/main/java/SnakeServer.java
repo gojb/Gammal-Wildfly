@@ -411,7 +411,7 @@ public class SnakeServer {
 //						.add("Y", snake.y[i]));
 //			}
 			if (snake.pixels.size()==snake.length) {
-				snake.pixels.remove(snake.length);
+				snake.pixels.remove(snake.length-1);
 			}
 			snake.pixels.add(Json.createObjectBuilder()
 						.add("X", snake.x[0])
