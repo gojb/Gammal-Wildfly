@@ -16,7 +16,7 @@ public class SnakeServer {
 	public static boolean highscoreBool;
 	public static JsonArrayBuilder arrayBuilder=Json.createArrayBuilder();;
 	static String message;
-	
+
 	public static Thread gameloop=new Thread(){
 		@Override
 		public void run() {
@@ -58,7 +58,7 @@ public class SnakeServer {
 		plupp();
 		gameloop.start();;
 	}
-	
+
 	private final Object lock = new Object();
 	private Session session;
 	private int[] x=new int[1000],y=new int[1000];
@@ -68,7 +68,7 @@ public class SnakeServer {
 	private String namn;
 	private int highscore;
 	private int fördröjning;
-	
+
 
 	Thread sendloop=new Thread(){
 		public void run() {
@@ -234,12 +234,12 @@ public class SnakeServer {
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 		//			snake.send(message);
 
-		
-			synchronized(message){
-				message.notifyAll();
-				}
 
-		
+		synchronized(message){
+			message.notifyAll();
+		}
+
+
 		arrayBuilder=Json.createArrayBuilder();
 	}
 	static void plupp(){
