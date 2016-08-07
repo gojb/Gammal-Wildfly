@@ -77,13 +77,13 @@ public class SnakeServer {
 				try {
 					synchronized(LOCK){
 						LOCK.wait();
-						send(message);
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					sendAll(e.getStackTrace().toString());
 				}
+				send(message);
 			}
 		};
 	};
