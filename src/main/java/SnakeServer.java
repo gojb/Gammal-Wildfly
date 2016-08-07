@@ -71,14 +71,14 @@ public class SnakeServer {
 	Thread sendloop=new Thread(){
 		public void run() {
 			while(session.isOpen()){				
-				try {
-					synchronized(lock){
-						wait();
-					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//					synchronized(lock){
+//						wait();
+//					}
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				send(message);
 
 			}
