@@ -71,14 +71,14 @@ public class SnakeServer {
 	Thread sendloop=new Thread(){
 		public void run() {
 			while(session.isOpen()){				
-//				try {
-//					synchronized(lock){
-//						wait();
-//					}
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				try {
+					synchronized(lock){
+						wait();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				send(message);
 
 			}
@@ -232,7 +232,9 @@ public class SnakeServer {
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 			//			snake.send(message);
 			synchronized(lock){
-				lock.notifyAll();
+				for (SnakeServer snakeServer : snakes) {
+					snakeServer.sendloop.notify();
+				}
 			}
 		arrayBuilder=Json.createArrayBuilder();
 	}
