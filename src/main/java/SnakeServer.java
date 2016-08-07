@@ -230,12 +230,14 @@ public class SnakeServer {
 	}
 	public static void sendAll(){
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
-			//			snake.send(message);
+		//			snake.send(message);
+
+		for (SnakeServer snakeServer : snakes) {
 			synchronized(lock){
-				for (SnakeServer snakeServer : snakes) {
-					snakeServer.sendloop.notify();
-				}
-			}
+				snakeServer.sendloop.notify();}
+
+		}
+
 		arrayBuilder=Json.createArrayBuilder();
 	}
 	static void plupp(){
