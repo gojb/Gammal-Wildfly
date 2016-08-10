@@ -399,7 +399,7 @@ public class SnakeServer {
 							" Send"+(date7-date6)));
 		}
 	}
-	private JsonArray pixels=Json.createArrayBuilder().build();
+	private JsonArray pixels;
 	private static void databuild() {
 		JsonArrayBuilder array=Json.createArrayBuilder();
 
@@ -410,6 +410,7 @@ public class SnakeServer {
 //						.add("X", snake.x[i])
 //						.add("Y", snake.y[i]));
 //			}
+//			snake.pixels.set
 			if (snake.pixels.size()==snake.length) {
 				snake.pixels.remove(snake.length-1);
 			}
