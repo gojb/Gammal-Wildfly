@@ -394,7 +394,7 @@ public class SnakeServer {
 		long diff=date8-date;
 		if (diff>4) {
 			arrayBuilder.add(Json.createObjectBuilder().add("type", "delay")
-					.add("delay", "Total"+diff+
+					.add("delay", "Total:"+diff+
 							" Rem:"+(date2-date)+
 							" Move:"+(date3-date2)+
 							" Förl:"+(date4-date3)+
