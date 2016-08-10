@@ -169,13 +169,17 @@ public class SnakeServer {
 	public void close(){
 		removeList.add(this);
 	}
-
+	int errtimes;
 	public void send(String string,boolean isLast) {
 		try {
 			session.getBasicRemote().sendText(string,isLast);
+			errtimes=0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			removeList.add(this);
+			if (errtimes++>100) {
+				removeList.add(this);
+			}
+
 		}
 	}
 	public void send(String string) {		 
@@ -201,13 +205,13 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-//		JsonArrayBuilder pixels=Json.createArrayBuilder();
-//		for (int i = 0; i < length; i++) {
-//			pixels.add(Json.createObjectBuilder()
-//					.add("X", x[i])
-//					.add("Y", y[i]));
-//		}
-//		this.pixels=pixels.build();
+		//		JsonArrayBuilder pixels=Json.createArrayBuilder();
+		//		for (int i = 0; i < length; i++) {
+		//			pixels.add(Json.createObjectBuilder()
+		//					.add("X", x[i])
+		//					.add("Y", y[i]));
+		//		}
+		//		this.pixels=pixels.build();
 		highscoreBool=true;
 		fördröjning=10;
 
@@ -391,16 +395,16 @@ public class SnakeServer {
 		if (diff>4) {
 			arrayBuilder.add(Json.createObjectBuilder().add("type", "delay")
 					.add("delay", "Total"+diff+
-							" Rem"+(date2-date)+
-							" Move"+(date3-date2)+
-							" Förl"+(date4-date3)+
-							" Poäng"+(date5-date4)+
-							" BuildLoad"+(date6-date5)+
-							" Build"+(date7-date6)+
-							" Send"+(date8-date7)));
+							" Rem:"+(date2-date)+
+							" Move:"+(date3-date2)+
+							" Förl:"+(date4-date3)+
+							" Poäng:"+(date5-date4)+
+							" BuildLoad:"+(date6-date5)+
+							" Build:"+(date7-date6)+
+							" Send:"+(date8-date7)));
 		}
 	}
-//	private JsonArrayBuilder pixels;
+	//	private JsonArrayBuilder pixels;
 	private static long databuild() {
 		JsonArrayBuilder array=Json.createArrayBuilder();
 
@@ -411,14 +415,14 @@ public class SnakeServer {
 						.add("X", snake.x[i])
 						.add("Y", snake.y[i]));
 			}
-//			snake.pixels.set
-//			if (snake.pixels.size()==snake.length) {
-//				snake.pixels.remove(snake.length-1);
-//			}
-//			snake.pixels.add(Json.createObjectBuilder()
-//						.add("X", snake.x[0])
-//						.add("Y", snake.y[0]).build());
-			
+			//			snake.pixels.set
+			//			if (snake.pixels.size()==snake.length) {
+			//				snake.pixels.remove(snake.length-1);
+			//			}
+			//			snake.pixels.add(Json.createObjectBuilder()
+			//						.add("X", snake.x[0])
+			//						.add("Y", snake.y[0]).build());
+
 			array.add(Json.createObjectBuilder()
 					.add("färg", snake.färg)
 					.add("pixels", pixels));
