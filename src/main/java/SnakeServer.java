@@ -201,13 +201,13 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
-		JsonArrayBuilder pixels=Json.createArrayBuilder();
-		for (int i = 0; i < length; i++) {
-			pixels.add(Json.createObjectBuilder()
-					.add("X", x[i])
-					.add("Y", y[i]));
-		}
-		this.pixels=pixels.build();
+//		JsonArrayBuilder pixels=Json.createArrayBuilder();
+//		for (int i = 0; i < length; i++) {
+//			pixels.add(Json.createObjectBuilder()
+//					.add("X", x[i])
+//					.add("Y", y[i]));
+//		}
+//		this.pixels=pixels.build();
 		highscoreBool=true;
 		fördröjning=10;
 
@@ -283,7 +283,7 @@ public class SnakeServer {
 		highscoreBool=false;
 	}
 	public static void update() {
-		long date = System.currentTimeMillis();
+		long date = System.currentTimeMillis(),date2,date3 = 0,date4=0,date5=0,date6=0,date7 = 0,date8=0;
 		try {
 			if (removeList.size()>0) {
 				for (SnakeServer snakeServer : removeList) {
@@ -295,7 +295,7 @@ public class SnakeServer {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		long date2 = System.currentTimeMillis(),date3 = 0,date4=0,date5=0,date6=0,date7; 
+		date2 = System.currentTimeMillis() ;
 		try{
 
 			//Gör alla förflyttningar
@@ -375,8 +375,8 @@ public class SnakeServer {
 				}
 			}
 			date5 = System.currentTimeMillis();
-			databuild();
-			date6 = System.currentTimeMillis();
+			date6 = databuild();
+			date7 = System.currentTimeMillis();
 			sendAll();
 
 		}
@@ -386,8 +386,8 @@ public class SnakeServer {
 			e.printStackTrace(new PrintWriter(errors));
 			sendAll("E "+errors.toString());
 		}
-		date7 = System.currentTimeMillis();
-		long diff=date7-date;
+		date8 = System.currentTimeMillis();
+		long diff=date8-date;
 		if (diff>4) {
 			arrayBuilder.add(Json.createObjectBuilder().add("type", "delay")
 					.add("delay", "Total"+diff+
@@ -395,32 +395,33 @@ public class SnakeServer {
 							" Move"+(date3-date2)+
 							" Förl"+(date4-date3)+
 							" Poäng"+(date5-date4)+
-							" Build"+(date6-date5)+
-							" Send"+(date7-date6)));
+							" BuildLoad"+(date6-date5)+
+							" Build"+(date7-date6)+
+							" Send"+(date8-date7)));
 		}
 	}
-	private JsonArray pixels;
-	private static void databuild() {
+//	private JsonArrayBuilder pixels;
+	private static long databuild() {
 		JsonArrayBuilder array=Json.createArrayBuilder();
 
 		for (SnakeServer snake : snakes) {
-//			JsonArrayBuilder pixels=Json.createArrayBuilder();
-//			for (int i = 0; i < snake.length; i++) {
-//				pixels.add(Json.createObjectBuilder()
-//						.add("X", snake.x[i])
-//						.add("Y", snake.y[i]));
-//			}
-//			snake.pixels.set
-			if (snake.pixels.size()==snake.length) {
-				snake.pixels.remove(snake.length-1);
+			JsonArrayBuilder pixels=Json.createArrayBuilder();
+			for (int i = 0; i < snake.length; i++) {
+				pixels.add(Json.createObjectBuilder()
+						.add("X", snake.x[i])
+						.add("Y", snake.y[i]));
 			}
-			snake.pixels.add(Json.createObjectBuilder()
-						.add("X", snake.x[0])
-						.add("Y", snake.y[0]).build());
+//			snake.pixels.set
+//			if (snake.pixels.size()==snake.length) {
+//				snake.pixels.remove(snake.length-1);
+//			}
+//			snake.pixels.add(Json.createObjectBuilder()
+//						.add("X", snake.x[0])
+//						.add("Y", snake.y[0]).build());
 			
 			array.add(Json.createObjectBuilder()
 					.add("färg", snake.färg)
-					.add("pixels", snake.pixels));
+					.add("pixels", pixels));
 		}
 		arrayBuilder.add(Json.createObjectBuilder()
 				.add("type", "players")
@@ -428,6 +429,8 @@ public class SnakeServer {
 		if (highscoreBool) {
 			highscore();
 		}
+		long b=System.currentTimeMillis();
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
+		return b;
 	}
 }
