@@ -1,11 +1,10 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
+import javax.websocket.server.*;
 
 @ServerEndpoint(value="/skepp")
 public class Skepp {
@@ -118,7 +117,7 @@ public class Skepp {
 			}
 			skicka("--klar: "+klar + " --- andra.klar: "+andra.klar);
 		}
-		else if (string.toLowerCase().equals("skjut")||string.toLowerCase().equals("skott")) {
+		else if (string.toLowerCase().equals("skjut")||string.toLowerCase().equals("skott")||string.toLowerCase().equals("gameover")) {
 			skickaTillAndra(message);
 		}
 		else{
