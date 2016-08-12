@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 
 import javax.json.*;
@@ -15,8 +17,9 @@ public class SnakeServer {
 	public static int pluppX,pluppY;
 	public static boolean highscoreBool;
 	public static JsonArrayBuilder arrayBuilder=Json.createArrayBuilder();;
-	static String message;
-	private static final Object lock = new Object();
+	static String message;	
+	private static final Object LOCK = new Object();
+
 	public static Thread gameloop=new Thread(){
 		@Override
 		public void run() {
@@ -59,6 +62,7 @@ public class SnakeServer {
 		gameloop.start();;
 	}
 
+
 	private Session session;
 	private int[] x=new int[1000],y=new int[1000];
 	private int length;
@@ -68,20 +72,20 @@ public class SnakeServer {
 	private int highscore;
 	private int fördröjning;
 
+
 	Thread sendloop=new Thread(){
 		public void run() {
 			while(session.isOpen()){				
 				try {
-
-					synchronized(lock){
-						wait();
+					synchronized(LOCK){
+						LOCK.wait();
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					sendAll(e.getStackTrace().toString());
 				}
 				send(message);
-
 			}
 		};
 	};
@@ -121,12 +125,14 @@ public class SnakeServer {
 								)).build().toString());
 				send("START");
 				fördröjning=-1;
-				datasend();
 				if (pause) {
+
 					send(Json.createObjectBuilder()
 							.add("data",Json.createArrayBuilder().add(Json.createObjectBuilder()
 									.add("type", "pause")
 									)).build().toString());
+					databuild();
+					sendAll();
 				}
 			}
 			else if (string.equals("RES")) {
@@ -143,11 +149,13 @@ public class SnakeServer {
 				if (pause) {
 					arrayBuilder.add(Json.createObjectBuilder()
 							.add("type", "pause"));
+					databuild();
 					sendAll();
 				}
 				else {
 					arrayBuilder.add(Json.createObjectBuilder()
 							.add("type", "unpause"));
+					databuild();
 					sendAll();
 				}
 			}
@@ -161,13 +169,17 @@ public class SnakeServer {
 	public void close(){
 		removeList.add(this);
 	}
-
+	int errtimes;
 	public void send(String string,boolean isLast) {
 		try {
 			session.getBasicRemote().sendText(string,isLast);
+			errtimes=0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			removeList.add(this);
+			if (errtimes++>100) {
+				removeList.add(this);
+			}
+
 		}
 	}
 	public void send(String string) {		 
@@ -193,6 +205,13 @@ public class SnakeServer {
 			x[0]=posx;
 			y[0]=posy;
 		}
+		//		JsonArrayBuilder pixels=Json.createArrayBuilder();
+		//		for (int i = 0; i < length; i++) {
+		//			pixels.add(Json.createObjectBuilder()
+		//					.add("X", x[i])
+		//					.add("Y", y[i]));
+		//		}
+		//		this.pixels=pixels.build();
 		highscoreBool=true;
 		fördröjning=10;
 
@@ -230,11 +249,13 @@ public class SnakeServer {
 		}
 	}
 	public static void sendAll(){
-		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
-			//			snake.send(message);
-			synchronized(lock){
-				lock.notifyAll();
-			}
+
+		//			snake.send(message);
+
+
+		synchronized(LOCK){
+			LOCK.notifyAll();
+		}
 		arrayBuilder=Json.createArrayBuilder();
 	}
 	static void plupp(){
@@ -266,7 +287,7 @@ public class SnakeServer {
 		highscoreBool=false;
 	}
 	public static void update() {
-		long date = System.currentTimeMillis();
+		long date = System.currentTimeMillis(),date2,date3 = 0,date4=0,date5=0,date6=0,date7 = 0,date8=0;
 		try {
 			if (removeList.size()>0) {
 				for (SnakeServer snakeServer : removeList) {
@@ -278,7 +299,7 @@ public class SnakeServer {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		long date2 = System.currentTimeMillis(),date3 = 0,date4=0,date5=0,date6=0; 
+		date2 = System.currentTimeMillis() ;
 		try{
 
 			//Gör alla förflyttningar
@@ -308,18 +329,18 @@ public class SnakeServer {
 			//Förlustkontroll
 			date3 = System.currentTimeMillis();
 			for (SnakeServer snake : snakes) {
-				gameoverloop:if(snake.fördröjning<0){
+				dennasnake:if(snake.fördröjning<0){
 					//Kolla om munnen åker ur bild
 					if (snake.x[0]<0||snake.y[0]<0||snake.x[0]>=width||snake.y[0]>=height) {
 						snake.gameover("urBild");
-						break gameoverloop;
+						break dennasnake;
 					}
 
 					//Kolla om munnen nuddar egna kroppen
 					for (int i = 1; i < snake.length; i++) {
 						if((snake.x[0]==snake.x[i]&&snake.y[0]==snake.y[i])) {
 							snake.gameover("nuddaKropp");
-							break gameoverloop;
+							break dennasnake;
 						}
 					}
 
@@ -341,7 +362,7 @@ public class SnakeServer {
 								for (int i = 1; i < snake2.length; i++) {
 									if (snake.x[0]==snake2.x[i]&&snake.y[0]==snake2.y[i]){
 										snake.gameover("nuddaAnnanKropp");
-										break gameoverloop;
+										break dennasnake;
 									}
 								} 
 							}
@@ -358,30 +379,35 @@ public class SnakeServer {
 				}
 			}
 			date5 = System.currentTimeMillis();
-			datasend();
+			date6 = databuild();
+			date7 = System.currentTimeMillis();
+			sendAll();
 
 		}
 		catch(Exception e){
 			sendAll("SERVERUPDATEEXEPTION");
-			sendAll("E "+e.toString());
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			sendAll("E "+errors.toString());
 		}
-		date6 = System.currentTimeMillis();
-		long diff=date6-date;
+		date8 = System.currentTimeMillis();
+		long diff=date8-date;
 		if (diff>4) {
 			arrayBuilder.add(Json.createObjectBuilder().add("type", "delay")
-					.add("delay", "Total"+diff+
-							" Rem"+(date2-date)+
-							" Move"+(date3-date2)+
-							" Förl"+(date4-date3)+
-							" Poäng"+(date5-date4)+
-							" Send"+(date6-date5)));
+					.add("delay", "Total:"+diff+
+							" Rem:"+(date2-date)+
+							" Move:"+(date3-date2)+
+							" Förl:"+(date4-date3)+
+							" Poäng:"+(date5-date4)+
+							" BuildLoad:"+(date6-date5)+
+							" Build:"+(date7-date6)+
+							" Send:"+(date8-date7)));
 		}
 	}
-
-	private static void datasend() {
+	//	private JsonArrayBuilder pixels;
+	private static long databuild() {
 		JsonArrayBuilder array=Json.createArrayBuilder();
 
-		//Skicka data till spelarna
 		for (SnakeServer snake : snakes) {
 			JsonArrayBuilder pixels=Json.createArrayBuilder();
 			for (int i = 0; i < snake.length; i++) {
@@ -389,6 +415,14 @@ public class SnakeServer {
 						.add("X", snake.x[i])
 						.add("Y", snake.y[i]));
 			}
+			//			snake.pixels.set
+			//			if (snake.pixels.size()==snake.length) {
+			//				snake.pixels.remove(snake.length-1);
+			//			}
+			//			snake.pixels.add(Json.createObjectBuilder()
+			//						.add("X", snake.x[0])
+			//						.add("Y", snake.y[0]).build());
+
 			array.add(Json.createObjectBuilder()
 					.add("färg", snake.färg)
 					.add("pixels", pixels));
@@ -399,6 +433,8 @@ public class SnakeServer {
 		if (highscoreBool) {
 			highscore();
 		}
-		sendAll();
+		long b=System.currentTimeMillis();
+		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
+		return b;
 	}
 }
