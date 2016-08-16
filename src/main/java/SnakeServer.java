@@ -253,10 +253,10 @@ public class SnakeServer {
 		//			snake.send(message);
 
 
-//		synchronized(LOCK){
-//			LOCK.notifyAll();
-//		}
-		sendAll(message);
+		synchronized(LOCK){
+			LOCK.notifyAll();
+		}
+//		sendAll(message);
 		arrayBuilder=Json.createArrayBuilder();
 	}
 	static void plupp(){
