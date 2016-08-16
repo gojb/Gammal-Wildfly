@@ -431,10 +431,11 @@ public class SnakeServer {
 		arrayBuilder.add(Json.createObjectBuilder()
 				.add("type", "players")
 				.add("players", array));
+		
+		long b=System.currentTimeMillis();
 		if (highscoreBool) {
 			highscore();
 		}
-		long b=System.currentTimeMillis();
 		message=Json.createObjectBuilder().add("data",arrayBuilder).build().toString();
 		return b;
 	}
