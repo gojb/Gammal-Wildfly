@@ -325,7 +325,7 @@ public class SnakeServer {
 						snake.x[0]-=1;
 				}
 				else{
-					if (--snake.fördröjning==0) {
+					if (--snake.fördröjning<=0) {
 						arrayBuilder.add(Json.createObjectBuilder()
 								.add("type", "cleangameover"));
 						snake.length=3;
