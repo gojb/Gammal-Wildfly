@@ -66,13 +66,13 @@ public class SnakeServer {
 
 	private Session session;
 	private int[] x=new int[1000],y=new int[1000];
-	private int length,lastlength;
+	private int length;
 	private String riktning,senasteriktning;
 	private String färg;
 	private String namn;
 	private int highscore;
 	private int fördröjning;
-	int clear;
+//	int clear;
 
 
 	Thread sendloop=new Thread(){
@@ -127,6 +127,7 @@ public class SnakeServer {
 								)).build().toString());
 				send("START");
 				fördröjning=-1;
+				starta();
 				if (pause) {
 
 					send(Json.createObjectBuilder()
@@ -187,6 +188,13 @@ public class SnakeServer {
 	public void send(String string) {		 
 		send(string,true);
 	}
+	public void starta(){
+		length=3;
+		x[1]=-1;
+		y[1]=-1;
+		x[2]=-1;
+		y[2]=-1;
+	}
 	public void reset(){
 //		for (int i = 0; i < x.length; i++) {
 //			x[i]=-1;
@@ -240,7 +248,7 @@ public class SnakeServer {
 	public static void resetAll(){
 		for (SnakeServer snakeServer : snakes) {
 			snakeServer.reset();
-			snakeServer.fördröjning=-1;
+			snakeServer.starta();
 		}
 		plupp();
 		pause=false;
@@ -328,12 +336,10 @@ public class SnakeServer {
 					if (--snake.fördröjning<=0) {
 						arrayBuilder.add(Json.createObjectBuilder()
 								.add("type", "cleangameover"));
-						snake.length=3;
-						snake.x[1]=-1;
-						snake.y[1]=-1;
+						snake.starta();
 					}
 				}
-				snake.senasteriktning=snake.riktning;
+//				snake.senasteriktning=snake.riktning;
 			}
 			//Förlustkontroll
 			date3 = System.currentTimeMillis();
@@ -383,6 +389,8 @@ public class SnakeServer {
 			//Poängkontroll
 			for (SnakeServer snake : snakes) {
 				if (snake.x[0]==pluppX&&snake.y[0]==pluppY) {
+					snake.x[snake.length]=-1;
+					snake.y[snake.length]=-1;
 					snake.length++;
 					plupp();
 				}
