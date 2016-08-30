@@ -164,7 +164,9 @@ public class SnakeServer {
 			}
 			scanner.close();
 		} catch (Exception e) {
-			send(e.toString());
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			send("E "+errors.toString());
 		}
 
 	}
