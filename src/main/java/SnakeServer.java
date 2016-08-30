@@ -18,7 +18,7 @@ public class SnakeServer {
 	public static boolean highscoreBool;
 	public static JsonArrayBuilder arrayBuilder=Json.createArrayBuilder();;
 	static String message;	
-	
+
 	private static final Object LOCK = new Object();
 
 	public static Thread gameloop=new Thread(){
@@ -52,7 +52,16 @@ public class SnakeServer {
 	static Comparator<SnakeServer> comparator = new Comparator<SnakeServer>() {
 		@Override
 		public int compare(SnakeServer o1, SnakeServer o2) {
-			int one = (o2.length-o1.length);
+			int 
+			poäng2=o2.length-3,
+			poäng1=o1.length-3;
+			if (poäng1<0) {
+				poäng1=0;
+			}
+			if (poäng2<0) {
+				poäng2=0;
+			}
+			int one = (poäng2-poäng1);
 
 			return one == 0 ? (o2.highscore-o1.highscore) : one;
 		}
@@ -72,7 +81,7 @@ public class SnakeServer {
 	private String namn;
 	private int highscore;
 	private int fördröjning;
-//	int clear;
+	//	int clear;
 
 
 	Thread sendloop=new Thread(){
@@ -198,10 +207,10 @@ public class SnakeServer {
 		y[2]=-1;
 	}
 	public void reset(){
-//		for (int i = 0; i < x.length; i++) {
-//			x[i]=-1;
-//			y[i]=-1;
-//		}
+		//		for (int i = 0; i < x.length; i++) {
+		//			x[i]=-1;
+		//			y[i]=-1;
+		//		}
 		int posx = random.nextInt(width);
 		int posy = random.nextInt(height);
 
@@ -268,7 +277,7 @@ public class SnakeServer {
 		synchronized(LOCK){
 			LOCK.notifyAll();
 		}
-//		sendAll(message);
+		//		sendAll(message);
 		arrayBuilder=Json.createArrayBuilder();
 	}
 	static void plupp(){
@@ -286,7 +295,7 @@ public class SnakeServer {
 
 		JsonArrayBuilder array=Json.createArrayBuilder();
 		for (SnakeServer snake : snakes) {
-			
+
 			int poäng=snake.length-3;
 			if(poäng<0)
 				poäng=0;
@@ -430,14 +439,14 @@ public class SnakeServer {
 		for (SnakeServer snake : snakes) {
 			JsonArrayBuilder X=Json.createArrayBuilder();
 			JsonArrayBuilder Y=Json.createArrayBuilder();
-			
+
 			for (int i = 0; i < snake.length; i++) {
 				X.add(snake.x[i]);
 				Y.add(snake.y[i]);
 			}
-//			if (snake.lastlength=snake.length) {
-//				
-//			}
+			//			if (snake.lastlength=snake.length) {
+			//				
+			//			}
 			//			snake.pixels.set
 			//			if (snake.pixels.size()==snake.length) {
 			//				snake.pixels.remove(snake.length-1);
@@ -445,23 +454,23 @@ public class SnakeServer {
 			//			snake.pixels.add(Json.createObjectBuilder()
 			//						.add("X", snake.x[0])
 			//						.add("Y", snake.y[0]).build());
-//
-//			pixels.add(Json.createObjectBuilder()
-//					.add("X", snake.x[snake.length-1])
-//					.add("Y", snake.y[snake.length-1]));
+			//
+			//			pixels.add(Json.createObjectBuilder()
+			//					.add("X", snake.x[snake.length-1])
+			//					.add("Y", snake.y[snake.length-1]));
 			array.add(Json.createObjectBuilder()
 					.add("färg", snake.färg)
 					.add("X", X)
 					.add("Y", Y));
-			
-//			if (snake.clear==0) {
-//				
-//			}
+
+			//			if (snake.clear==0) {
+			//				
+			//			}
 		}
 		arrayBuilder.add(Json.createObjectBuilder()
 				.add("type", "players")
 				.add("players", array));
-		
+
 		long b=System.currentTimeMillis();
 		if (highscoreBool) {
 			highscore();
