@@ -341,7 +341,7 @@ public class SnakeServer {
 						snake.starta();
 					}
 				}
-//				snake.senasteriktning=snake.riktning;
+				snake.senasteriktning=snake.riktning;
 			}
 			//Förlustkontroll
 			date3 = System.currentTimeMillis();
