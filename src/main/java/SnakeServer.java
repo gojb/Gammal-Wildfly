@@ -238,11 +238,11 @@ public class SnakeServer {
 
 	}
 	void gameover(String orsak){
-		arrayBuilder.add(Json.createObjectBuilder()
-				.add("type", "gameover")
-				.add("namn", namn)
-				.add("orsak", orsak)
-				);
+//		arrayBuilder.add(Json.createObjectBuilder()
+//				.add("type", "gameover")
+//				.add("namn", namn)
+//				.add("orsak", orsak)
+//				);
 		reset();
 	}
 	private boolean setRiktning(String nyRiktning) {
@@ -345,8 +345,8 @@ public class SnakeServer {
 				}
 				else{
 					if (--snake.fördröjning<=0) {
-						arrayBuilder.add(Json.createObjectBuilder()
-								.add("type", "cleangameover"));
+//						arrayBuilder.add(Json.createObjectBuilder()
+//								.add("type", "cleangameover"));
 						snake.starta();
 					}
 				}
@@ -437,13 +437,15 @@ public class SnakeServer {
 		JsonArrayBuilder array=Json.createArrayBuilder();
 
 		for (SnakeServer snake : snakes) {
-			JsonArrayBuilder X=Json.createArrayBuilder();
-			JsonArrayBuilder Y=Json.createArrayBuilder();
-
+//			JsonArrayBuilder X=Json.createArrayBuilder();
+//			JsonArrayBuilder Y=Json.createArrayBuilder();
+			JsonArrayBuilder player=Json.createArrayBuilder();
+			player.add(snake.färg);
 			for (int i = 0; i < snake.length; i++) {
-				X.add(snake.x[i]);
-				Y.add(snake.y[i]);
+				player.add(snake.x[i]);
+				player.add(snake.y[i]);
 			}
+			array.add(player);
 			//			if (snake.lastlength=snake.length) {
 			//				
 			//			}
@@ -458,10 +460,10 @@ public class SnakeServer {
 			//			pixels.add(Json.createObjectBuilder()
 			//					.add("X", snake.x[snake.length-1])
 			//					.add("Y", snake.y[snake.length-1]));
-			array.add(Json.createObjectBuilder()
-					.add("färg", snake.färg)
-					.add("X", X)
-					.add("Y", Y));
+//			array.add(Json.createObjectBuilder()
+//					.add("färg", snake.färg)
+//					.add("X", X)
+//					.add("Y", Y));
 
 			//			if (snake.clear==0) {
 			//				
